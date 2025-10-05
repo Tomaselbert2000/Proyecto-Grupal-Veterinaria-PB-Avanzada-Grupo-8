@@ -584,4 +584,10 @@ public class ClaseDeTest {
 	public void dadoQueExisteUnaClaseVeterinarioPorHerenciaObtengoQuePuedoConsultarSusAtributos() {
 		String nombre
 	}
+	@Test
+	public void dadoQue() {
+		
+	}
+	
+	
 }
