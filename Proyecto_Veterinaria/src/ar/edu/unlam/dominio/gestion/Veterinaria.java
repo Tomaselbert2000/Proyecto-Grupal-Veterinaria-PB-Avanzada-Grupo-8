@@ -5,8 +5,8 @@ import java.time.LocalDate;
 import java.util.HashSet;
 
 import ar.edu.unlam.dominio.subclass.Cliente;
-import ar.edu.unlam.dominio.subclass.Empleado;
 import ar.edu.unlam.dominio.superclass.Animal;
+import ar.edu.unlam.dominio.superclass.Empleado;
 import ar.edu.unlam.dominio.superclass.Persona;
 
 public class Veterinaria {

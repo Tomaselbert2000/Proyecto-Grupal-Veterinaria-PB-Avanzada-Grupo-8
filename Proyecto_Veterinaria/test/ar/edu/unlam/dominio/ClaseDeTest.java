@@ -8,9 +8,9 @@ import org.junit.Test;
 
 import ar.edu.unlam.dominio.gestion.Veterinaria;
 import ar.edu.unlam.dominio.subclass.Cliente;
-import ar.edu.unlam.dominio.subclass.Empleado;
 import ar.edu.unlam.dominio.subclass.Felino;
 import ar.edu.unlam.dominio.superclass.Animal;
+import ar.edu.unlam.dominio.superclass.Empleado;
 import ar.edu.unlam.dominio.superclass.Persona;
 
 public class ClaseDeTest {
@@ -582,12 +582,16 @@ public class ClaseDeTest {
 	
 	@Test
 	public void dadoQueExisteUnaClaseVeterinarioPorHerenciaObtengoQuePuedoConsultarSusAtributos() {
-		String nombre
-	}
-	@Test
-	public void dadoQue() {
+		Long idVeterinario = 1L;
+		String nombre = "Matias";
+		String apellido = "Martinez";
+		Long dni = 31L;
+		Long nroLegajo = 1L;
+		String fechaIngreso = "2025-01-01";
+		Double salario = 10000.0;
 		
+		// aca agregamos atributos especificos para los veterinarios y relacionados
+		
+		String especialidad = "Cardiologia";
 	}
-	
-	
 }
