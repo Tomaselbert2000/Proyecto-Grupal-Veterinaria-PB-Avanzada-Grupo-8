@@ -319,4 +319,173 @@ public class ClaseDeTest {
 		
 		assertFalse(seAgrego);
 	}
+	
+	@Test
+	public void dadoQueExisteUnAnimalObtengoQuePuedoConsultarSusAtributos() {
+		Integer idMascota = 10;
+		String nombre = "Firulais";
+		Double peso = 10.5;
+		Double altura = 0.50;
+		String fechaNacimiento = "2023-03-20";
+		Long idDueño = 1L;
+		
+		Animal nuevaMascota = new Animal(idMascota, nombre, peso, altura, fechaNacimiento, idDueño);
+		
+		assertEquals(10, nuevaMascota.getId(), 0);
+		assertEquals("Firulais", nuevaMascota.getNombre());
+		assertEquals(10.5, nuevaMascota.getPeso(), 0.0);
+		assertEquals(0.50, nuevaMascota.getAltura(), 0.0);
+		assertEquals("2023-03-20", nuevaMascota.getFechaNacimiento());
+		assertEquals(1L, nuevaMascota.getDniDueño(), 0);
+	}
+	
+	@Test
+	public void dadoQueExisteUnaVeterinariaSiIntentoRegistrarUnAnimalSinUnDueñoAsociadoRegistradoObtengoFalse() {
+		Integer idMascota = 10;
+		String nombre = "Firulais";
+		Double peso = 10.5;
+		Double altura = 0.50;
+		String fechaNacimiento = "2023-03-20";
+		Long idDueño = 1L; // aca tenemos el id del dueño pero no tenemos ninguno registrado en el sistema con ese id
+		
+		Animal mascotaSinDueño = new Animal(idMascota, nombre, peso, altura, fechaNacimiento, idDueño);
+		Boolean seAgrego = this.gestionVeterinaria.registrarMascota(mascotaSinDueño);
+		assertFalse(seAgrego);
+	}
+	
+	@Test
+	public void dadoQueExisteUnaMascotaSiYUnClienteSiIntentoRegistrarlaObtengoTrue() {
+		// para preparar el entorno de test aca vamos a registrar un dueño
+		String nombre = "Tomas";
+		String apellido = "Elbert";
+		Long dni = 10L;
+		
+		Long nroCliente = 20L;
+		String direccion = "Calle falsa 123";
+		String telefono = "123456";
+		Double saldo = 25000.0;
+		
+		// registramos el cliente
+		Cliente cliente = new Cliente(nombre, apellido, dni, nroCliente, telefono, direccion, saldo);
+		this.gestionVeterinaria.registrarNuevoCliente(cliente);
+		
+		Integer idMascota = 10;
+		String nombreMascota = "Firulais";
+		Double peso = 10.5;
+		Double altura = 0.50;
+		String fechaNacimiento = "2023-03-20";
+		Long dniDueño = 10L;
+		
+		// creamos y registramos la mascota
+		Animal nuevaMascota = new Animal(idMascota, nombreMascota, peso, altura, fechaNacimiento, dniDueño);
+		Boolean seAgrego = this.gestionVeterinaria.registrarMascota(nuevaMascota);
+		
+		assertTrue(seAgrego);
+	}
+	
+	@Test
+	public void dadoQueExisteUnaVeterinariaConUnClienteRegistradoSiIntentoRegistrarDosVecesLaMismaMascotaAla2daObtengoFalse() {
+		String nombre = "Tomas";
+		String apellido = "Elbert";
+		Long dni = 10L;
+		
+		Long nroCliente = 20L;
+		String direccion = "Calle falsa 123";
+		String telefono = "123456";
+		Double saldo = 25000.0;
+		
+		// registramos el cliente
+		Cliente cliente = new Cliente(nombre, apellido, dni, nroCliente, telefono, direccion, saldo);
+		this.gestionVeterinaria.registrarNuevoCliente(cliente);
+		
+		// ahora creamos la instancia de la mascota
+		Integer idMascota = 10;
+		String nombreMascota = "Firulais";
+		Double peso = 10.5;
+		Double altura = 0.50;
+		String fechaNacimiento = "2023-03-20";
+		Long dniDueño = 10L;
+		
+		Animal nuevaMascota = new Animal(idMascota, nombreMascota, peso, altura, fechaNacimiento, dniDueño);
+		
+		// probamos registrar dos veces y comparamos los resultados
+		Boolean seRegistroLaPrimera = this.gestionVeterinaria.registrarMascota(nuevaMascota);
+		Boolean seRegistroLaSegunda = this.gestionVeterinaria.registrarMascota(nuevaMascota);
+		
+		assertTrue(seRegistroLaPrimera);
+		assertFalse(seRegistroLaSegunda);
+	}
+	
+	@Test
+	public void dadoQueExisteUnaVeterinariaConUnClienteSiIntentoRegistrarDosMascotasConElMismoIdAla2daObtengoFalse() {
+		// creamos un cliente para probar el test
+		String nombre = "Tomas";
+		String apellido = "Elbert";
+		Long dni = 10L;
+		
+		Long nroCliente = 20L;
+		String direccion = "Calle falsa 123";
+		String telefono = "123456";
+		Double saldo = 25000.0;
+		
+		// registramos el cliente
+		Cliente cliente = new Cliente(nombre, apellido, dni, nroCliente, telefono, direccion, saldo);
+		this.gestionVeterinaria.registrarNuevoCliente(cliente);
+		
+		// ahora vamos a probar crear dos mascotas con datos distintos pero el mismo id, ambas asociadas al cliente
+		Integer idMascota1 = 10;
+		String nombreMascota1 = "Firulais";
+		Double peso1 = 10.5;
+		Double altura1 = 0.50;
+		String fechaNacimiento1 = "2023-03-20";
+		Long dniDueño1 = 10L;
+		
+		Animal mascotaOriginal = new Animal(idMascota1, nombreMascota1, peso1, altura1, fechaNacimiento1, dniDueño1);
+		
+		Integer idMascota2 = 10; // aca repetimos el id que usamos en la instancia anterior
+		String nombreMascota2 = "Mimi";
+		Double peso2 = 3.5;
+		Double altura2 = 0.25;
+		String fechaNacimiento2 = "2024-04-10";
+		Long dniDueño2 = 10L;
+		
+		Animal mascotaRepetida = new Animal(idMascota2, nombreMascota2, peso2, altura2, fechaNacimiento2, dniDueño2);
+		
+		Boolean seRegistroLaPrimera = this.gestionVeterinaria.registrarMascota(mascotaOriginal);
+		Boolean seRegistroLaSegunda = this.gestionVeterinaria.registrarMascota(mascotaRepetida);
+		
+		// asi como con las demas clases, aca vamos a usar la sobreescritura del hashcode y de equals
+		assertTrue(seRegistroLaPrimera);
+		assertFalse(seRegistroLaSegunda);
+	}
+	
+	@Test
+	public void dadoQueExisteUnaVeterinariaConUnClienteRegistradoSiIntentoRegistrarlaConUnIdNegativoObtengoFalse() {
+		String nombre = "Tomas";
+		String apellido = "Elbert";
+		Long dni = 10L;
+		
+		Long nroCliente = 20L;
+		String direccion = "Calle falsa 123";
+		String telefono = "123456";
+		Double saldo = 25000.0;
+		
+		// creamos y registramos el cliente
+		Cliente nuevoCliente = new Cliente(nombre, apellido, dni, nroCliente, telefono, direccion, saldo);
+		this.gestionVeterinaria.registrarNuevoCliente(nuevoCliente);
+		
+		// ahora creamos una mascota con un id erroneo a proposito para verificar que no lo deja pasar
+		Integer idMascota = -10;
+		String nombreMascota = "Firulais";
+		Double peso = 10.5;
+		Double altura = 0.50;
+		String fechaNacimiento = "2023-03-20";
+		Long dniDueño = 10L;
+		
+		Animal mascotaConIdNegativo = new Animal(idMascota, nombreMascota, peso, altura, fechaNacimiento, dniDueño);
+		
+		Boolean seAgrego = this.gestionVeterinaria.registrarMascota(mascotaConIdNegativo);
+		
+		assertFalse(seAgrego);
+	}
 }

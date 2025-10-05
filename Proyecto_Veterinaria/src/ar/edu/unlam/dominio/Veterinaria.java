@@ -7,9 +7,11 @@ import java.util.HashSet;
 public class Veterinaria {
 
 	private HashSet<Persona> listaPersonas;
+	private HashSet<Animal> listaMascotas;
 	
 	public Veterinaria() {
 		this.listaPersonas = new HashSet<>();
+		this.listaMascotas = new HashSet<>();
 	}
 
 	public Boolean registrarNuevaPersona(Persona nuevaPersona) {
@@ -48,7 +50,7 @@ public class Veterinaria {
 		try {
 			
 			/*
-			 * Intentamos parsear el string de la fecha con para
+			 * Intentamos parsear el string de la fecha para
 			 * convertirlo en un objeto de tipo LocalDate.
 			 * Si el parseo llegase a ser exitoso, indica que la
 			 * fecha ingresada efectivamente existe en el calendario
@@ -72,6 +74,25 @@ public class Veterinaria {
 
 	private boolean salarioValido(Empleado nuevoEmpleado) {
 		return nuevoEmpleado.getSalario() > 0;
+	}
+
+	public Boolean registrarMascota(Animal nuevaMascota) {
+		return this.tieneDueñoRegistrado(nuevaMascota)
+				&& this.idMascotaValido(nuevaMascota)
+				&& this.listaMascotas.add(nuevaMascota);
+	}
+
+	private boolean idMascotaValido(Animal nuevaMascota) {
+		return nuevaMascota.getId() > 0;
+	}
+
+	private Boolean tieneDueñoRegistrado(Animal nuevaMascota) {
+		for(Persona cliente : this.listaPersonas) {
+			if(cliente.getDni().equals(nuevaMascota.getDniDueño())) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }
