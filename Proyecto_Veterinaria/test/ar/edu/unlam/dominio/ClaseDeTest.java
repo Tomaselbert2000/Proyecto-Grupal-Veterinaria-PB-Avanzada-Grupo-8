@@ -488,4 +488,63 @@ public class ClaseDeTest {
 		
 		assertFalse(seAgrego);
 	}
+	
+	// implementamos subclases de animal correspondiente a cada especie que queramos agregar
+	
+	@Test
+	public void dadoQueExisteUnFelinoPorHerenciaObtengoQuePuedoConsultarSusAtributos() {
+		Integer id = 5;
+		String nombre = "Mimi";
+		Double peso = 2.5;
+		Double altura = 0.35;
+		String fechaNacimiento = "2025-06-01";
+		Long dniDueño = 5L;
+		String especie = "Siames";
+		String colorPrincipal = "Gris";
+		String colorSecundario = "Blanco";
+		
+		Felino gato = new Felino(id, nombre, peso, altura, fechaNacimiento, dniDueño, especie, colorPrincipal, colorSecundario);
+		
+		assertEquals(5, gato.getId(), 0);
+		assertEquals("Mimi", gato.getNombre());
+		assertEquals(2.5, gato.getPeso(), 0.0);
+		assertEquals(0.35, gato.getAltura(), 0.0);
+		assertEquals("2025-06-01", gato.getFechaNacimiento());
+		assertEquals(5L, gato.getDniDueño(), 0);
+		assertEquals("Siames", gato.getEspecie());
+		assertEquals("Gris", gato.getColorPrincipal());
+		assertEquals("Blanco", gato.getColorSecundario());
+	}
+	
+	@Test
+	public void dadoQueExisteUnFelinoPorHerenciaSiLoRegistroObtengoTrue() {
+		// creamos un cliente para poder realizar el registro con la subclase
+		String nombre = "Tomas";
+		String apellido = "Elbert";
+		Long dni = 10L;
+		
+		Long nroCliente = 20L;
+		String direccion = "Calle falsa 123";
+		String telefono = "123456";
+		Double saldo = 25000.0;
+		
+		Cliente nuevoCliente = new Cliente(nombre, apellido, dni, nroCliente, telefono, direccion, saldo);
+		this.gestionVeterinaria.registrarNuevoCliente(nuevoCliente);
+		
+		Integer id = 5;
+		String nombreMascota = "Mimi";
+		Double peso = 2.5;
+		Double altura = 0.35;
+		String fechaNacimiento = "2025-06-01";
+		Long dniDueño = 10L;
+		String especie = "Siames";
+		String colorPrincipal = "Gris";
+		String colorSecundario = "Blanco";
+		
+		Felino gato = new Felino(id, nombreMascota, peso, altura, fechaNacimiento, dniDueño, especie, colorPrincipal, colorSecundario);
+		
+		Boolean seRegistroLaSubclase = this.gestionVeterinaria.registrarMascota(gato);
+		
+		assertTrue(seRegistroLaSubclase);
+	}
 }
