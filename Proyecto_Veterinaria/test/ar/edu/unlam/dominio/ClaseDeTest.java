@@ -547,4 +547,10 @@ public class ClaseDeTest {
 		
 		assertTrue(seRegistroLaSubclase);
 	}
+	@Test
+	public void dadoQue() {
+		
+	}
+	
+	
 }
