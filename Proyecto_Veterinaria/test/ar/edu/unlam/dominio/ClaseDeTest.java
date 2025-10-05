@@ -6,6 +6,13 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
+import ar.edu.unlam.dominio.gestion.Veterinaria;
+import ar.edu.unlam.dominio.subclass.Cliente;
+import ar.edu.unlam.dominio.subclass.Empleado;
+import ar.edu.unlam.dominio.subclass.Felino;
+import ar.edu.unlam.dominio.superclass.Animal;
+import ar.edu.unlam.dominio.superclass.Persona;
+
 public class ClaseDeTest {
 	
 	private Veterinaria gestionVeterinaria;
@@ -61,16 +68,14 @@ public class ClaseDeTest {
 		Long dni = 1L;
 		Long nroLegajo = 1L;
 		String fechaIngreso = "2025-01-01";
-		String puesto = "Administrativo";
 		Double salario = 10000.0;
 		
-		Empleado empleado = new Empleado(nombre, apellido, dni, nroLegajo, fechaIngreso, puesto, salario);
+		Empleado empleado = new Empleado(nombre, apellido, dni, nroLegajo, fechaIngreso, salario);
 		assertEquals("Tomas", empleado.getNombre());
 		assertEquals("Elbert", empleado.getApellido());
 		assertEquals(1L, empleado.getDni(), 0);
 		assertEquals(1L, empleado.getNroLegajo(), 0);
 		assertEquals("2025-01-01", empleado.getFechaIngreso());
-		assertEquals("Administrativo", empleado.getPuesto());
 		assertEquals(10000.0, empleado.getSalario(), 0.0);
 	}
 	
@@ -110,10 +115,9 @@ public class ClaseDeTest {
 		Long dni = 1L;
 		Long nroLegajo = 1L;
 		String fechaIngreso = "2025-01-01";
-		String puesto = "Administrativo";
 		Double salario = 10000.0;
 		
-		Empleado empleado = new Empleado(nombre, apellido, dni, nroLegajo, fechaIngreso, puesto, salario);
+		Empleado empleado = new Empleado(nombre, apellido, dni, nroLegajo, fechaIngreso, salario);
 		
 		Boolean seRegistroElEmpleado = this.gestionVeterinaria.registrarNuevoEmpleado(empleado);
 		assertTrue(seRegistroElEmpleado);
@@ -177,20 +181,18 @@ public class ClaseDeTest {
 		Long dni = 1L;
 		Long nroLegajo = 1L;
 		String fechaIngreso = "2025-01-01";
-		String puesto = "Administrativo";
 		Double salario = 10000.0;
 		
-		Empleado primerEmpleado = new Empleado(nombre, apellido, dni, nroLegajo, fechaIngreso, puesto, salario);
+		Empleado primerEmpleado = new Empleado(nombre, apellido, dni, nroLegajo, fechaIngreso, salario);
 		
 		String nombre2 = "Juan";
 		String apellido2 = "Perez";
 		Long dni2 = 1L;
 		Long nroLegajo2 = 1L;
 		String fechaIngreso2 = "2025-03-01";
-		String puesto2 = "Encargado";
 		Double salario2 = 20000.0;
 		
-		Empleado segundoEmpleado = new Empleado(nombre2, apellido2, dni2, nroLegajo2, fechaIngreso2, puesto2, salario2);
+		Empleado segundoEmpleado = new Empleado(nombre2, apellido2, dni2, nroLegajo2, fechaIngreso2, salario2);
 		
 		Boolean seRegistroElPrimero = this.gestionVeterinaria.registrarNuevaPersona(primerEmpleado);
 		Boolean seRegistroElSegundo = this.gestionVeterinaria.registrarNuevaPersona(segundoEmpleado);
@@ -224,10 +226,9 @@ public class ClaseDeTest {
 		Long dni = 1L;
 		Long nroLegajo = 1L;
 		String fechaIngreso = "2025-01-01";
-		String puesto = "Administrativo";
 		Double salario = -10000.0;
 		
-		Empleado empleadoSalarioNegativo = new Empleado(nombre, apellido, dni, nroLegajo, fechaIngreso, puesto, salario);
+		Empleado empleadoSalarioNegativo = new Empleado(nombre, apellido, dni, nroLegajo, fechaIngreso, salario);
 		
 		Boolean seRegistro = this.gestionVeterinaria.registrarNuevoEmpleado(empleadoSalarioNegativo);
 		assertFalse(seRegistro);
@@ -258,10 +259,9 @@ public class ClaseDeTest {
 		Long dni = -31L;
 		Long nroLegajo = 1L;
 		String fechaIngreso = "2025-01-01";
-		String puesto = "Administrativo";
 		Double salario = 10000.0;
 		
-		Empleado empleadoDniNegativo = new Empleado(nombre, apellido, dni, nroLegajo, fechaIngreso, puesto, salario);
+		Empleado empleadoDniNegativo = new Empleado(nombre, apellido, dni, nroLegajo, fechaIngreso, salario);
 		
 		Boolean seRegistro = this.gestionVeterinaria.registrarNuevoEmpleado(empleadoDniNegativo);
 		
@@ -293,10 +293,9 @@ public class ClaseDeTest {
 		Long dni = 123L;
 		Long nroLegajo = -110L;
 		String fechaIngreso = "2025-01-01";
-		String puesto = "Administrativo";
 		Double salario = 10000.0;
 		
-		Empleado empleadoConLegajoNegativo = new Empleado(nombre, apellido, dni, nroLegajo, fechaIngreso, puesto, salario);
+		Empleado empleadoConLegajoNegativo = new Empleado(nombre, apellido, dni, nroLegajo, fechaIngreso, salario);
 		
 		Boolean seRegistro = this.gestionVeterinaria.registrarNuevoEmpleado(empleadoConLegajoNegativo);
 		
@@ -310,10 +309,9 @@ public class ClaseDeTest {
 		Long dni = 123L;
 		Long nroLegajo = 110L;
 		String fechaIngreso = "2025-02-31"; // ingresamos una fecha que no existe en el calendario
-		String puesto = "Administrativo";
 		Double salario = 10000.0;
 		
-		Empleado empleadoConFechaIncorrecta = new Empleado(nombre, apellido, dni, nroLegajo, fechaIngreso, puesto, salario);
+		Empleado empleadoConFechaIncorrecta = new Empleado(nombre, apellido, dni, nroLegajo, fechaIngreso, salario);
 		
 		Boolean seAgrego = this.gestionVeterinaria.registrarNuevoEmpleado(empleadoConFechaIncorrecta);
 		
@@ -489,6 +487,35 @@ public class ClaseDeTest {
 		assertFalse(seAgrego);
 	}
 	
+	@Test
+	public void dadoQueExisteUnClienteConUnaMascotaSiIntentoRegistrarlaConUnaFechaDeNacimientoInvalidaObtengoFalse() {
+		String nombre = "Tomas";
+		String apellido = "Elbert";
+		Long dni = 10L;
+		
+		Long nroCliente = 20L;
+		String direccion = "Calle falsa 123";
+		String telefono = "123456";
+		Double saldo = 25000.0;
+		
+		// creamos y registramos el cliente
+		Cliente nuevoCliente = new Cliente(nombre, apellido, dni, nroCliente, telefono, direccion, saldo);
+		this.gestionVeterinaria.registrarNuevoCliente(nuevoCliente);
+
+		Integer idMascota = 100;
+		String nombreMascota = "Firulais";
+		Double peso = 10.5;
+		Double altura = 0.50;
+		String fechaNacimiento = "2020-13-20"; // ponemos una fecha erronea a proposito para probar que el sistema lo valida antes de seguir
+		Long dniDueño = 10L;
+		
+		Animal mascotaConFechaInvalida = new Animal(idMascota, nombreMascota, peso, altura, fechaNacimiento, dniDueño);
+		
+		Boolean seRegistro = this.gestionVeterinaria.registrarMascota(mascotaConFechaInvalida);
+		
+		assertFalse(seRegistro);
+	}
+	
 	// implementamos subclases de animal correspondiente a cada especie que queramos agregar
 	
 	@Test
@@ -546,5 +573,15 @@ public class ClaseDeTest {
 		Boolean seRegistroLaSubclase = this.gestionVeterinaria.registrarMascota(gato);
 		
 		assertTrue(seRegistroLaSubclase);
+		
+		// comprobamos que la clase heredada cumple con las demas restricciones que aplicamos antes como
+		// el dni de dueño pre registrado, id no duplicado, fecha de nacimiento, etc.
+	}
+	
+	// creacion de subclases para Empleados
+	
+	@Test
+	public void dadoQueExisteUnaClaseVeterinarioPorHerenciaObtengoQuePuedoConsultarSusAtributos() {
+		String nombre
 	}
 }
