@@ -17,7 +17,8 @@ import ar.edu.unlam.dominio.subclass.Especialista;
 import ar.edu.unlam.dominio.superclass.Animal;
 import ar.edu.unlam.dominio.superclass.Empleado;
 import ar.edu.unlam.dominio.superclass.Persona;
-import test.ar.edu.unlam.dominio.Turno;
+import ar.edu.unlam.dominio.turno.Turno;
+
 
 public class ClaseDeTest {
 	

@@ -9,12 +9,14 @@ import ar.edu.unlam.dominio.superclass.Animal;
 import ar.edu.unlam.dominio.superclass.Empleado;
 import ar.edu.unlam.dominio.superclass.Persona;
 import ar.edu.unlam.dominio.superclass.Servicio;
+import ar.edu.unlam.dominio.turno.Turno;
 
 public class Veterinaria {
 
 	private HashSet<Persona> listaPersonas;
 	private HashSet<Animal> listaMascotas;
 	private HashSet<Servicio> listaDeServicios;
+	private HashSet<Turno> listaTurnos;
 	
 	public Veterinaria() {
 		this.listaPersonas = new HashSet<>();
@@ -174,5 +176,10 @@ public class Veterinaria {
 
 	private Boolean idServicioValido(Servicio servicio) {
 		return servicio.getId() > 0;
+	}
+
+	public Boolean registrarTurno(Turno turno) {
+		// TODO Auto-generated method stub
+		return listaTurnos.add(turno);
 	}
 }
