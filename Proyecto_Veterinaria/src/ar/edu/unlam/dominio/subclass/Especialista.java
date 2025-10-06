@@ -2,25 +2,28 @@ package ar.edu.unlam.dominio.subclass;
 
 import java.util.Objects;
 
+import ar.edu.unlam.dominio.enums.EspecialistaDoctor;
 import ar.edu.unlam.dominio.superclass.Empleado;
 
 public class Especialista extends Empleado{
 
 	private Long nroMatricula;
-	private String especialidad;
+	private EspecialistaDoctor especialistaDoctor;
 
-	public Especialista(String nombre, String apellido, Long dni, Long nroLegajo, String fechaIngreso, Double salario, Long nroMatricula, String especialidad) {
+	public Especialista(String nombre, String apellido, Long dni, Long nroLegajo, String fechaIngreso, Double salario, Long nroMatricula, EspecialistaDoctor especialistaDoctor) {
 		super(nombre, apellido, dni, nroLegajo, fechaIngreso, salario);
 		this.nroMatricula = nroMatricula;
-		this.especialidad = especialidad;
+		this.especialistaDoctor = especialistaDoctor;
 	}
 
 	public Long getNroMatricula() {
 		return this.nroMatricula;
 	}
 
-	public String getEspecialidad() {
-		return this.especialidad;
+	
+
+	public EspecialistaDoctor getEspecialistaDoctor() {
+		return especialistaDoctor;
 	}
 
 	@Override

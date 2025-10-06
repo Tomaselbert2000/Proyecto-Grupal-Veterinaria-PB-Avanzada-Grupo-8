@@ -22,6 +22,7 @@ public class Veterinaria {
 		this.listaPersonas = new HashSet<>();
 		this.listaMascotas = new HashSet<>();
 		this.listaDeServicios = new HashSet<>();
+		this.listaTurnos = new HashSet<Turno>();
 	}
 
 	public Boolean registrarNuevaPersona(Persona nuevaPersona) {
@@ -182,4 +183,6 @@ public class Veterinaria {
 		// TODO Auto-generated method stub
 		return listaTurnos.add(turno);
 	}
+
+	
 }
