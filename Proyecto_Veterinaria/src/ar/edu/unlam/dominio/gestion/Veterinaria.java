@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.HashSet;
 
 import ar.edu.unlam.dominio.subclass.Cliente;
+import ar.edu.unlam.dominio.subclass.Especialista;
 import ar.edu.unlam.dominio.superclass.Animal;
 import ar.edu.unlam.dominio.superclass.Empleado;
 import ar.edu.unlam.dominio.superclass.Persona;
@@ -23,7 +24,7 @@ public class Veterinaria {
 		return this.listaPersonas.add(nuevaPersona);
 	}
 
-	private boolean dniValido(Persona nuevaPersona) {
+	private Boolean dniValido(Persona nuevaPersona) {
 		return nuevaPersona.getDni() > 0;
 	}
 
@@ -35,11 +36,11 @@ public class Veterinaria {
 				&& this.listaPersonas.add(nuevoCliente);
 	}
 
-	private boolean numeroClienteValido(Cliente nuevoCliente) {
+	private Boolean numeroClienteValido(Cliente nuevoCliente) {
 		return nuevoCliente.getNroCliente() > 0;
 	}
 
-	private boolean saldoValido(Cliente nuevoCliente) {
+	private Boolean saldoValido(Cliente nuevoCliente) {
 		return nuevoCliente.getSaldo() >= 0.0;
 	}
 
@@ -47,11 +48,54 @@ public class Veterinaria {
 		return this.dniValido(nuevoEmpleado)
 				&& this.fechaIngresoValida(nuevoEmpleado)
 				&& this.numeroLegajoValido(nuevoEmpleado)
-				&& this.salarioValido(nuevoEmpleado) 
+				&& this.salarioValido(nuevoEmpleado)
 				&& this.listaPersonas.add(nuevoEmpleado);
 	}
+	
+	// aplicamos sobrecarga en el metodo anterior para que pueda cargar especialistas
+	public Boolean registrarNuevoEmpleado(Especialista especialista) {
+		return this.dniValido(especialista)
+				&& this.fechaIngresoValida(especialista)
+				&& this.numeroLegajoValido(especialista)
+				&& this.salarioValido(especialista)
+				&& this.nroMatriculaValido(especialista)
+				&& this.nroMatriculaNoDuplicado(especialista)
+				&& this.listaPersonas.add(especialista);
+	}
 
-	private boolean fechaIngresoValida(Empleado nuevoEmpleado) {
+	private Boolean nroMatriculaNoDuplicado(Especialista especialista) {
+		for(Persona persona : this.listaPersonas) {
+		
+			/*
+			 * Para poder distinguir entre los distintos especialistas registrados
+			 * vamos a usar su numero de matricula, por lo tanto casteamos leemos
+			 * la lista general de personas y a cada una la casteamos para usarla
+			 * como Especialista, consultamos su nroMatricula si lo tiene y lo
+			 * comparamos con el nroMatricula del especialista que queremos ingresar
+			 * Si son iguales, indica que esta repetido y por lo tanto retorna false
+			 * indicando que se considera duplicado.
+			 * De otro modo, pasa directamente al true y el metodo que ingresa los
+			 * especialistas al sistema funciona como se espera
+			 * 
+			 * ¿Por que aplicar una validacion extra?
+			 * Porque si bien el sistema hasta el momento ya valida tanto el dni como
+			 * el nro de legajo, dado que la coleccion es un hashset, si tenemos
+			 * distinto dni + distinto nro legajo, ya se calcula el hash con valores
+			 * diferentes entonces dos especialistas con igual matricula se tomarian
+			 * como diferentes instancias porque al sumar el hash de la matricula de
+			 * igual modo ambos resultados son diferentes.
+			 */
+			
+			if(persona instanceof Especialista) {
+				if(((Especialista) persona).getNroMatricula().equals(especialista.getNroMatricula())) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
+	private Boolean fechaIngresoValida(Empleado nuevoEmpleado) {
 		try {
 			
 			/*
@@ -73,11 +117,11 @@ public class Veterinaria {
 		}
 	}
 
-	private boolean numeroLegajoValido(Empleado nuevoEmpleado) {
+	private Boolean numeroLegajoValido(Empleado nuevoEmpleado) {
 		return nuevoEmpleado.getNroLegajo() > 0;
 	}
 
-	private boolean salarioValido(Empleado nuevoEmpleado) {
+	private Boolean salarioValido(Empleado nuevoEmpleado) {
 		return nuevoEmpleado.getSalario() > 0;
 	}
 
@@ -88,7 +132,7 @@ public class Veterinaria {
 				&& this.listaMascotas.add(nuevaMascota);
 	}
 
-	private boolean fechaNacimientoValida(Animal nuevaMascota) {
+	private Boolean fechaNacimientoValida(Animal nuevaMascota) {
 		// dentro de este metodo aplicamos la misma logica que con los empleados
 		try {
 			LocalDate.parse(nuevaMascota.getFechaNacimiento());
@@ -98,7 +142,7 @@ public class Veterinaria {
 		}
 	}
 
-	private boolean idMascotaValido(Animal nuevaMascota) {
+	private Boolean idMascotaValido(Animal nuevaMascota) {
 		return nuevaMascota.getId() > 0;
 	}
 
@@ -111,4 +155,7 @@ public class Veterinaria {
 		return false;
 	}
 
+	private Boolean nroMatriculaValido(Especialista especialista) {
+		return especialista.getNroMatricula() > 0;
+	}
 }

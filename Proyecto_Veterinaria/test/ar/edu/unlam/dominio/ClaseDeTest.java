@@ -9,6 +9,7 @@ import org.junit.Test;
 import ar.edu.unlam.dominio.gestion.Veterinaria;
 import ar.edu.unlam.dominio.subclass.Cliente;
 import ar.edu.unlam.dominio.subclass.Felino;
+import ar.edu.unlam.dominio.subclass.Especialista;
 import ar.edu.unlam.dominio.superclass.Animal;
 import ar.edu.unlam.dominio.superclass.Empleado;
 import ar.edu.unlam.dominio.superclass.Persona;
@@ -581,8 +582,7 @@ public class ClaseDeTest {
 	// creacion de subclases para Empleados
 	
 	@Test
-	public void dadoQueExisteUnaClaseVeterinarioPorHerenciaObtengoQuePuedoConsultarSusAtributos() {
-		Long idVeterinario = 1L;
+	public void dadoQueExisteUnaClaseEspecialistaPorHerenciaObtengoQuePuedoConsultarSusAtributos() {
 		String nombre = "Matias";
 		String apellido = "Martinez";
 		Long dni = 31L;
@@ -592,6 +592,94 @@ public class ClaseDeTest {
 		
 		// aca agregamos atributos especificos para los veterinarios y relacionados
 		
+		Long nroMatricula = 204060100L;
 		String especialidad = "Cardiologia";
+		
+		Especialista especialista = new Especialista(nombre, apellido, dni, nroLegajo, fechaIngreso, salario, nroMatricula, especialidad);
+		
+		assertEquals(nombre, especialista.getNombre());
+		assertEquals(apellido, especialista.getApellido());
+		assertEquals(dni, especialista.getDni());
+		assertEquals(nroLegajo, especialista.getNroLegajo());
+		assertEquals(fechaIngreso, especialista.getFechaIngreso());
+		assertEquals(salario, especialista.getSalario());
+		assertEquals(nroMatricula, especialista.getNroMatricula());
+		assertEquals(especialidad, especialista.getEspecialidad());
+	}
+	
+	@Test
+	public void dadoQueExisteUnEspecialistaPorHerenciaSiLoRegistroObtengoTrue() {
+		String nombre = "Matias";
+		String apellido = "Martinez";
+		Long dni = 31L;
+		Long nroLegajo = 1L;
+		String fechaIngreso = "2025-01-01";
+		Double salario = 10000.0;
+		
+		// aca agregamos atributos especificos para los veterinarios y relacionados
+		
+		Long nroMatricula = 204060100L;
+		String especialidad = "Cardiologia";
+		
+		Especialista especialista = new Especialista(nombre, apellido, dni, nroLegajo, fechaIngreso, salario, nroMatricula, especialidad);
+		
+		Boolean seRegistro = this.gestionVeterinaria.registrarNuevoEmpleado(especialista);
+		
+		assertTrue(seRegistro);
+	}
+	
+	@Test
+	public void dadoQueExisteUnaVeterinariaSiIntentoRegistrarDosVecesElMismoEspecialistaAl2doObtengoFalse() {
+		String nombre = "Matias";
+		String apellido = "Martinez";
+		Long dni = 31L;
+		Long nroLegajo = 1L;
+		String fechaIngreso = "2025-01-01";
+		Double salario = 10000.0;
+		
+		// aca agregamos atributos especificos para los veterinarios y relacionados
+		
+		Long nroMatricula = 204060100L;
+		String especialidad = "Cardiologia";
+		
+		Especialista especialista = new Especialista(nombre, apellido, dni, nroLegajo, fechaIngreso, salario, nroMatricula, especialidad);
+		
+		Boolean seRegistro = this.gestionVeterinaria.registrarNuevoEmpleado(especialista);
+		Boolean seRegistroDeNuevo = this.gestionVeterinaria.registrarNuevoEmpleado(especialista);
+		
+		assertTrue(seRegistro);
+		assertFalse(seRegistroDeNuevo);
+	}
+	
+	@Test
+	public void dadoQueExisteUnaVeterinariaSiIntentoRegistrarDosEspecialistasConElMismoNumeroDeMatriculaAl2doObtengoFalse() {
+		String nombre = "Matias";
+		String apellido = "Martinez";
+		Long dni = 31L;
+		Long nroLegajo = 1L;
+		String fechaIngreso = "2025-01-01";
+		Double salario = 10000.0;
+		
+		Long nroMatricula = 204060100L;
+		String especialidad = "Cardiologia";
+		
+		Especialista especialistaOriginal = new Especialista(nombre, apellido, dni, nroLegajo, fechaIngreso, salario, nroMatricula, especialidad);
+		
+		String nombre2 = "Juan";
+		String apellido2 = "Perez";
+		Long dni2 = 46L;
+		Long nroLegajo2 = 3L;
+		String fechaIngreso2 = "2024-09-22";
+		Double salario2 = 22000.0;
+		Long nroMatriculaRepetido = 204060100L; // repetimos el nro de matricula para que el sistema lo valide como incorrecto
+		String especialidad2 = "Traumatologia";
+		
+		Especialista especialistaRepetido = new Especialista(nombre2, apellido2, dni2, nroLegajo2, fechaIngreso2, salario2, nroMatriculaRepetido, especialidad2);
+		
+		Boolean seRegistroElPrimero = this.gestionVeterinaria.registrarNuevoEmpleado(especialistaOriginal);
+		Boolean seRegistroElSegundo = this.gestionVeterinaria.registrarNuevoEmpleado(especialistaRepetido);
+		
+		assertTrue(seRegistroElPrimero);
+		assertFalse(seRegistroElSegundo);
 	}
 }
