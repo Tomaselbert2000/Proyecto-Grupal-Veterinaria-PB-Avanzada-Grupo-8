@@ -2,7 +2,7 @@ package ar.edu.unlam.dominio.subclass;
 
 import ar.edu.unlam.dominio.superclass.Empleado;
 
-public class PersonalVeterinaria extends Empleado{
+public class PersonalVeterinaria extends Empleado {
 
 	private String areaAsignada;
 

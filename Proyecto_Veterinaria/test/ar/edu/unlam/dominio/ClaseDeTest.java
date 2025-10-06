@@ -3,12 +3,9 @@ package ar.edu.unlam.dominio;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-
 import java.time.LocalDateTime;
-
 import org.junit.Before;
 import org.junit.Test;
-
 import ar.edu.unlam.dominio.enums.EspecialistaDoctor;
 import ar.edu.unlam.dominio.enums.TipoCirugia;
 import ar.edu.unlam.dominio.enums.TipoEspecialidad;
@@ -927,7 +924,7 @@ public class ClaseDeTest {
 	}
 
 	@Test
-	public void dadoQueExisteUnaVeterinariaPorHerenciaObtengoQuePuedoCrearUnTurnoConAtrinutosCuandoLoConsultoObtengoSusAtributos() {
+	public void dadoQueExisteUnaVeterinariaPorHerenciaObtengoQuePuedoCrearUnTurnoConAtributosCuandoLoConsultoObtengoSusAtributos() {
 		// Paso a registrar el clinete
 
 		String nombre = "Leonardo";
@@ -977,7 +974,6 @@ public class ClaseDeTest {
 		assertTrue(seRegistroEspecialista);
 
 		// Paso a crear la hora del turno
-		LocalDateTime horaTurno = LocalDateTime.of(2025, 2, 5, 15, 0);
 		// Paso a crear la hora en la que se efectuo el turno
 		LocalDateTime horaCreacionTurno = LocalDateTime.now();
 
@@ -1016,19 +1012,5 @@ public class ClaseDeTest {
 		assertEquals(servicioObtenido, servicio);
 		assertEquals(horaTurnoObtenida, horaCreacionTurno);
 		assertEquals(idTurnoObtenido, idTurno);
-
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

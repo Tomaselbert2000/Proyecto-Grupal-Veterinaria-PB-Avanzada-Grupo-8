@@ -2,7 +2,7 @@ package ar.edu.unlam.dominio.superclass;
 
 import java.util.Objects;
 
-public class Empleado extends Persona{
+public class Empleado extends Persona {
 
 	private Long nroLegajo;
 	private String fechaIngreso;

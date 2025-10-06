@@ -17,7 +17,7 @@ public class Veterinaria {
 	private HashSet<Animal> listaMascotas;
 	private HashSet<Servicio> listaDeServicios;
 	private HashSet<Turno> listaTurnos;
-	
+
 	public Veterinaria() {
 		this.listaPersonas = new HashSet<>();
 		this.listaMascotas = new HashSet<>();
@@ -34,10 +34,7 @@ public class Veterinaria {
 	}
 
 	public Boolean registrarNuevoCliente(Cliente nuevoCliente) {
-		return 
-				this.dniValido(nuevoCliente)
-				&& this.numeroClienteValido(nuevoCliente)
-				&& this.saldoValido(nuevoCliente)
+		return this.dniValido(nuevoCliente) && this.numeroClienteValido(nuevoCliente) && this.saldoValido(nuevoCliente)
 				&& this.listaPersonas.add(nuevoCliente);
 	}
 
@@ -50,49 +47,43 @@ public class Veterinaria {
 	}
 
 	public Boolean registrarNuevoEmpleado(Empleado nuevoEmpleado) {
-		return this.dniValido(nuevoEmpleado)
-				&& this.fechaIngresoValida(nuevoEmpleado)
-				&& this.numeroLegajoValido(nuevoEmpleado)
-				&& this.salarioValido(nuevoEmpleado)
+		return this.dniValido(nuevoEmpleado) && this.fechaIngresoValida(nuevoEmpleado)
+				&& this.numeroLegajoValido(nuevoEmpleado) && this.salarioValido(nuevoEmpleado)
 				&& this.listaPersonas.add(nuevoEmpleado);
 	}
-	
-	// aplicamos sobrecarga en el metodo anterior para que pueda cargar especialistas
+
+	// aplicamos sobrecarga en el metodo anterior para que pueda cargar
+	// especialistas
 	public Boolean registrarNuevoEmpleado(Especialista especialista) {
-		return this.dniValido(especialista)
-				&& this.fechaIngresoValida(especialista)
-				&& this.numeroLegajoValido(especialista)
-				&& this.salarioValido(especialista)
-				&& this.nroMatriculaValido(especialista)
-				&& this.nroMatriculaNoDuplicado(especialista)
+		return this.dniValido(especialista) && this.fechaIngresoValida(especialista)
+				&& this.numeroLegajoValido(especialista) && this.salarioValido(especialista)
+				&& this.nroMatriculaValido(especialista) && this.nroMatriculaNoDuplicado(especialista)
 				&& this.listaPersonas.add(especialista);
 	}
 
 	private Boolean nroMatriculaNoDuplicado(Especialista especialista) {
-		for(Persona persona : this.listaPersonas) {
-		
+		for (Persona persona : this.listaPersonas) {
+
 			/*
-			 * Para poder distinguir entre los distintos especialistas registrados
-			 * vamos a usar su numero de matricula, por lo tanto casteamos leemos
-			 * la lista general de personas y a cada una la casteamos para usarla
-			 * como Especialista, consultamos su nroMatricula si lo tiene y lo
-			 * comparamos con el nroMatricula del especialista que queremos ingresar
-			 * Si son iguales, indica que esta repetido y por lo tanto retorna false
-			 * indicando que se considera duplicado.
+			 * Para poder distinguir entre los distintos especialistas registrados vamos a
+			 * usar su numero de matricula, por lo tanto casteamos leemos la lista general
+			 * de personas y a cada una la casteamos para usarla como Especialista,
+			 * consultamos su nroMatricula si lo tiene y lo comparamos con el nroMatricula
+			 * del especialista que queremos ingresar Si son iguales, indica que esta
+			 * repetido y por lo tanto retorna false indicando que se considera duplicado.
 			 * De otro modo, pasa directamente al true y el metodo que ingresa los
 			 * especialistas al sistema funciona como se espera
 			 * 
-			 * ¿Por que aplicar una validacion extra?
-			 * Porque si bien el sistema hasta el momento ya valida tanto el dni como
-			 * el nro de legajo, dado que la coleccion es un hashset, si tenemos
-			 * distinto dni + distinto nro legajo, ya se calcula el hash con valores
-			 * diferentes entonces dos especialistas con igual matricula se tomarian
-			 * como diferentes instancias porque al sumar el hash de la matricula de
-			 * igual modo ambos resultados son diferentes.
+			 * ¿Por que aplicar una validacion extra? Porque si bien el sistema hasta el
+			 * momento ya valida tanto el dni como el nro de legajo, dado que la coleccion
+			 * es un hashset, si tenemos distinto dni + distinto nro legajo, ya se calcula
+			 * el hash con valores diferentes entonces dos especialistas con igual matricula
+			 * se tomarian como diferentes instancias porque al sumar el hash de la
+			 * matricula de igual modo ambos resultados son diferentes.
 			 */
-			
-			if(persona instanceof Especialista) {
-				if(((Especialista) persona).getNroMatricula().equals(especialista.getNroMatricula())) {
+
+			if (persona instanceof Especialista) {
+				if (((Especialista) persona).getNroMatricula().equals(especialista.getNroMatricula())) {
 					return false;
 				}
 			}
@@ -102,21 +93,20 @@ public class Veterinaria {
 
 	private Boolean fechaIngresoValida(Empleado nuevoEmpleado) {
 		try {
-			
+
 			/*
-			 * Intentamos parsear el string de la fecha para
-			 * convertirlo en un objeto de tipo LocalDate.
-			 * Si el parseo llegase a ser exitoso, indica que la
-			 * fecha ingresada efectivamente existe en el calendario
+			 * Intentamos parsear el string de la fecha para convertirlo en un objeto de
+			 * tipo LocalDate. Si el parseo llegase a ser exitoso, indica que la fecha
+			 * ingresada efectivamente existe en el calendario
 			 * 
-			 * Por otra parte, si no es valida, se lanzara una
-			 * excepcion la cual se captura y directamente retorna el
-			 * false necesario para el metodo de registro de empleados
+			 * Por otra parte, si no es valida, se lanzara una excepcion la cual se captura
+			 * y directamente retorna el false necesario para el metodo de registro de
+			 * empleados
 			 */
-			
+
 			LocalDate.parse(nuevoEmpleado.getFechaIngreso());
 			return true;
-			
+
 		} catch (DateTimeException e) {
 			return false;
 		}
@@ -131,10 +121,8 @@ public class Veterinaria {
 	}
 
 	public Boolean registrarMascota(Animal nuevaMascota) {
-		return this.tieneDueñoRegistrado(nuevaMascota)
-				&& this.fechaNacimientoValida(nuevaMascota)
-				&& this.idMascotaValido(nuevaMascota)
-				&& this.listaMascotas.add(nuevaMascota);
+		return this.tieneDueñoRegistrado(nuevaMascota) && this.fechaNacimientoValida(nuevaMascota)
+				&& this.idMascotaValido(nuevaMascota) && this.listaMascotas.add(nuevaMascota);
 	}
 
 	private Boolean fechaNacimientoValida(Animal nuevaMascota) {
@@ -152,8 +140,8 @@ public class Veterinaria {
 	}
 
 	private Boolean tieneDueñoRegistrado(Animal nuevaMascota) {
-		for(Persona cliente : this.listaPersonas) {
-			if(cliente.getDni().equals(nuevaMascota.getDniDueño())) {
+		for (Persona cliente : this.listaPersonas) {
+			if (cliente.getDni().equals(nuevaMascota.getDniDueño())) {
 				return true;
 			}
 		}
@@ -163,12 +151,11 @@ public class Veterinaria {
 	private Boolean nroMatriculaValido(Especialista especialista) {
 		return especialista.getNroMatricula() > 0;
 	}
-	
-	// para evitar problemas al registrar distintas clases de servicios, el metodo recibe un objeto de la superclase
+
+	// para evitar problemas al registrar distintas clases de servicios, el metodo
+	// recibe un objeto de la superclase
 	public Boolean registrarNuevoServicio(Servicio servicio) {
-		return this.idServicioValido(servicio)
-				&& this.costoBaseValido(servicio)
-				&& this.listaDeServicios.add(servicio);
+		return this.idServicioValido(servicio) && this.costoBaseValido(servicio) && this.listaDeServicios.add(servicio);
 	}
 
 	private Boolean costoBaseValido(Servicio servicio) {
@@ -180,9 +167,7 @@ public class Veterinaria {
 	}
 
 	public Boolean registrarTurno(Turno turno) {
-		// TODO Auto-generated method stub
 		return listaTurnos.add(turno);
 	}
 
-	
 }

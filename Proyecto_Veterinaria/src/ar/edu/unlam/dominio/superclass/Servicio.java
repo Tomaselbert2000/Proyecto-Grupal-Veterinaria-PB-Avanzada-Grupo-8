@@ -3,25 +3,23 @@ package ar.edu.unlam.dominio.superclass;
 import java.util.Objects;
 
 public class Servicio {
-	
+
 	/*
-	 * Para gestionar correctamente los distintos
-	 * tipos de servicios de la veterinaria, cada
-	 * uno de ellos va a extender desde esta clase
-	 * padre e implementara una interfaz con las 
-	 * operaciones requeridas para funcionar
+	 * Para gestionar correctamente los distintos tipos de servicios de la
+	 * veterinaria, cada uno de ellos va a extender desde esta clase padre e
+	 * implementara una interfaz con las operaciones requeridas para funcionar
 	 */
-	
+
 	protected Integer idServicio;
 	protected String descripcion;
 	protected Double costoBase;
-	
+
 	public Servicio(Integer idServicio, String descripcion, Double costoBase) {
 		this.idServicio = idServicio;
 		this.descripcion = descripcion;
 		this.costoBase = costoBase;
 	}
-	
+
 	public Integer getId() {
 		return this.idServicio;
 	}

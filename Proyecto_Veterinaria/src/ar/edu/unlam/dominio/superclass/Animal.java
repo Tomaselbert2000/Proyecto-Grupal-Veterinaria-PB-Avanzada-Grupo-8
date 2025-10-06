@@ -3,7 +3,7 @@ package ar.edu.unlam.dominio.superclass;
 import java.util.Objects;
 
 public class Animal {
-	
+
 	private Integer idMascota;
 	private String nombre;
 	private Double peso;
@@ -43,8 +43,9 @@ public class Animal {
 	public Long getDniDueño() {
 		return this.dniDueño;
 	}
-	
-	// creamos la sobreescritura de equals y hashcode para afinar como se distinguen los elementos de esta clase
+
+	// creamos la sobreescritura de equals y hashcode para afinar como se distinguen
+	// los elementos de esta clase
 
 	@Override
 	public int hashCode() {

@@ -4,14 +4,15 @@ import java.util.Objects;
 
 import ar.edu.unlam.dominio.superclass.Persona;
 
-public class Cliente extends Persona{
+public class Cliente extends Persona {
 
 	private Long nroCliente;
 	private String telefono;
 	private String direccion;
 	private Double saldo;
 
-	public Cliente(String nombre, String apellido, Long dni, Long nroCliente, String telefono, String direccion, Double saldo) {
+	public Cliente(String nombre, String apellido, Long dni, Long nroCliente, String telefono, String direccion,
+			Double saldo) {
 		super(nombre, apellido, dni);
 		this.nroCliente = nroCliente;
 		this.telefono = telefono;
