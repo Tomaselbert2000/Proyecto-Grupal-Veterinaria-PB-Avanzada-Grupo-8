@@ -5,11 +5,11 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
-
 import ar.edu.unlam.dominio.gestion.Veterinaria;
 import ar.edu.unlam.dominio.subclass.Cliente;
 import ar.edu.unlam.dominio.subclass.Felino;
 import ar.edu.unlam.dominio.subclass.PersonalVeterinaria;
+import ar.edu.unlam.dominio.subclass.ServicioBaño;
 import ar.edu.unlam.dominio.subclass.Especialista;
 import ar.edu.unlam.dominio.superclass.Animal;
 import ar.edu.unlam.dominio.superclass.Empleado;
@@ -721,5 +721,102 @@ public class ClaseDeTest {
 		assertEquals(fechaIngreso, personalNuevo.getFechaIngreso());
 		assertEquals(salario, personalNuevo.getSalario());
 		assertEquals(areaAsignada, personalNuevo.getAreaAsignada());
+	}
+	
+	/*
+	 * a partir de este punto vamos probando como relacionar las distintas entidades a traves de los turnos
+	 * ya que un cliente reserva un turno para X mascota, la cual ademas es atendida ya sea por un especialista
+	 * en caso de ser un tema de salud o bien por el personal de la veterinaria como puede ser para baño/corte de pelo
+	 * Lo cual además implica un servicio que luego debe descontarse del saldo del cliente que lo solicita
+	 */
+	
+	// para mejorar la modularizacion del codigo, el servicio como tal es una clase abstracta
+	// que tendra caracteristicas basicas y luego otras especificas la van a usar como punto de partida
+	
+	@Test
+	public void dadoQueExisteUnaClaseServicioDeBañoObtengoQuePuedoConsultarSusAtributos() {
+		Integer idServicioAsignado = 1;
+		String descripcion = "Servicio de baño completo";
+		Double costoBase = 25000.0;
+		
+		ServicioBaño servicio = new ServicioBaño(idServicioAsignado, descripcion, costoBase);
+		
+		assertEquals(idServicioAsignado, servicio.getId());
+		assertEquals(descripcion, servicio.getDescripcion());
+		assertEquals(costoBase, servicio.getCostoBase());
+	}
+	
+	@Test
+	public void dadoQueExisteUnaVeterinariaSiIntentoRegistrarUnNuevoServicioObtengoTrue() {
+		Integer idServicioAsignado = 1;
+		String descripcion = "Servicio de baño completo";
+		Double costoBase = 25000.0;
+		
+		ServicioBaño servicio = new ServicioBaño(idServicioAsignado, descripcion, costoBase);
+		Boolean seAgrego = this.gestionVeterinaria.registrarNuevoServicio(servicio);
+		
+		assertTrue(seAgrego);
+	}
+	
+	@Test
+	public void dadoQueExisteUnaVeterinariaSiIntentoRegistrarDosVecesElMismoServicioAla2daObtengoFalse() {
+		Integer idServicioAsignado = 1;
+		String descripcion = "Servicio de baño completo";
+		Double costoBase = 20000.0;
+		
+		ServicioBaño servicio = new ServicioBaño(idServicioAsignado, descripcion, costoBase);
+		
+		Boolean seAgregoLaPrimera = this.gestionVeterinaria.registrarNuevoServicio(servicio);
+		Boolean seAgregoLaSegunda = this.gestionVeterinaria.registrarNuevoServicio(servicio);
+		
+		assertTrue(seAgregoLaPrimera);
+		assertFalse(seAgregoLaSegunda);
+	}
+	
+	@Test
+	public void dadoQueExisteUnaVeterinariaSiIntentoRegistrarDosServiciosDistintosConElMismoIdAl2doObtengoFalse() {
+		Integer idServicio = 1;
+		String descripcion = "Servicio de baño simple";
+		Double costoBase = 12000.0;
+		
+		ServicioBaño bañoBasico = new ServicioBaño(idServicio, descripcion, costoBase);
+		
+		Integer otroId = 1; // volvemos a usar el mismo id aca
+		String otraDescripcion = "Servicio de baño premium";
+		Double otroCostoBase = 18000.0;
+		
+		ServicioBaño bañoPremium = new ServicioBaño(otroId, otraDescripcion, otroCostoBase);
+		
+		Boolean seAgregoElPrimero = this.gestionVeterinaria.registrarNuevoServicio(bañoBasico);
+		Boolean seAgregoElSegundo = this.gestionVeterinaria.registrarNuevoServicio(bañoPremium);
+		
+		assertTrue(seAgregoElPrimero);
+		assertFalse(seAgregoElSegundo);
+	}
+	
+	@Test
+	public void dadoQueExisteUnaVeterinariaSiIntentoRegistrarUnServicioConIdNegativoObtengoFalse() {
+		Integer idServicio = -1;
+		String descripcion = "Servicio de baño simple";
+		Double costoBase = 12000.0;
+		
+		ServicioBaño bañoBasico = new ServicioBaño(idServicio, descripcion, costoBase);
+		
+		Boolean seAgrego = this.gestionVeterinaria.registrarNuevoServicio(bañoBasico);
+		
+		assertFalse(seAgrego);
+	}
+	
+	@Test
+	public void dadoQueExisteUnaVeterinariaSiIntentoRegistrarUnServicioConUnCostoBaseNegativoObtengoFalse() {
+		Integer idServicio = 10;
+		String descripcion = "Servicio de baño simple";
+		Double costoBase = -15000.0;
+		
+		ServicioBaño bañoBasico = new ServicioBaño(idServicio, descripcion, costoBase);
+		
+		Boolean seAgrego = this.gestionVeterinaria.registrarNuevoServicio(bañoBasico);
+		
+		assertFalse(seAgrego);
 	}
 }

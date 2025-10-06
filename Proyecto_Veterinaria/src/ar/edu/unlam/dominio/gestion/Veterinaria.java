@@ -3,21 +3,23 @@ package ar.edu.unlam.dominio.gestion;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.HashSet;
-
 import ar.edu.unlam.dominio.subclass.Cliente;
 import ar.edu.unlam.dominio.subclass.Especialista;
 import ar.edu.unlam.dominio.superclass.Animal;
 import ar.edu.unlam.dominio.superclass.Empleado;
 import ar.edu.unlam.dominio.superclass.Persona;
+import ar.edu.unlam.dominio.superclass.Servicio;
 
 public class Veterinaria {
 
 	private HashSet<Persona> listaPersonas;
 	private HashSet<Animal> listaMascotas;
+	private HashSet<Servicio> listaDeServicios;
 	
 	public Veterinaria() {
 		this.listaPersonas = new HashSet<>();
 		this.listaMascotas = new HashSet<>();
+		this.listaDeServicios = new HashSet<>();
 	}
 
 	public Boolean registrarNuevaPersona(Persona nuevaPersona) {
@@ -157,5 +159,20 @@ public class Veterinaria {
 
 	private Boolean nroMatriculaValido(Especialista especialista) {
 		return especialista.getNroMatricula() > 0;
+	}
+	
+	// para evitar problemas al registrar distintas clases de servicios, el metodo recibe un objeto de la superclase
+	public Boolean registrarNuevoServicio(Servicio servicio) {
+		return this.idServicioValido(servicio)
+				&& this.costoBaseValido(servicio)
+				&& this.listaDeServicios.add(servicio);
+	}
+
+	private Boolean costoBaseValido(Servicio servicio) {
+		return servicio.getCostoBase() > 0.0;
+	}
+
+	private Boolean idServicioValido(Servicio servicio) {
+		return servicio.getId() > 0;
 	}
 }
