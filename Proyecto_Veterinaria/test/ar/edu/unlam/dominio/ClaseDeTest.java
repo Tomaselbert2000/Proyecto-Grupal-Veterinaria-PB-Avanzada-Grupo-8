@@ -682,4 +682,22 @@ public class ClaseDeTest {
 		assertTrue(seRegistroElPrimero);
 		assertFalse(seRegistroElSegundo);
 	}
+	
+	@Test
+	public void dadoQueExisteUnaVeterinariaSiIntentoRegistrarUnEspecialistaConNroMatriculaNegativoObtengoFalse() {
+		String nombre = "Matias";
+		String apellido = "Martinez";
+		Long dni = 31L;
+		Long nroLegajo = 1L;
+		String fechaIngreso = "2025-01-01";
+		Double salario = 10000.0;
+		
+		Long nroMatricula = -204060100L; // aca usamos un numero de matricula que se debe validar como incorrecto
+		String especialidad = "Cardiologia";
+		
+		Especialista especialista = new Especialista(nombre, apellido, dni, nroLegajo, fechaIngreso, salario, nroMatricula, especialidad);
+		Boolean seAgrego = this.gestionVeterinaria.registrarNuevoEmpleado(especialista);
+		
+		assertFalse(seAgrego);
+	}
 }
