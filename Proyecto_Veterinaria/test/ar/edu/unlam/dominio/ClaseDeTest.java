@@ -9,6 +9,7 @@ import org.junit.Test;
 import ar.edu.unlam.dominio.gestion.Veterinaria;
 import ar.edu.unlam.dominio.subclass.Cliente;
 import ar.edu.unlam.dominio.subclass.Felino;
+import ar.edu.unlam.dominio.subclass.PersonalVeterinaria;
 import ar.edu.unlam.dominio.subclass.Especialista;
 import ar.edu.unlam.dominio.superclass.Animal;
 import ar.edu.unlam.dominio.superclass.Empleado;
@@ -699,5 +700,26 @@ public class ClaseDeTest {
 		Boolean seAgrego = this.gestionVeterinaria.registrarNuevoEmpleado(especialista);
 		
 		assertFalse(seAgrego);
+	}
+	
+	@Test
+	public void dadoQueExisteUnPersonalDeVeterinariaPorHerenciaObtengoQuePuedoConsultarSusAtributos() {
+		String nombre = "Matias";
+		String apellido = "Martinez";
+		Long dni = 31L;
+		Long nroLegajo = 1L;
+		String fechaIngreso = "2025-01-01";
+		Double salario = 10000.0;
+		String areaAsignada = "Administracion";
+		
+		PersonalVeterinaria personalNuevo = new PersonalVeterinaria(nombre, apellido, dni, nroLegajo, fechaIngreso, salario, areaAsignada);
+		
+		assertEquals(nombre, personalNuevo.getNombre());
+		assertEquals(apellido, personalNuevo.getApellido());
+		assertEquals(dni, personalNuevo.getDni());
+		assertEquals(nroLegajo, personalNuevo.getNroLegajo());
+		assertEquals(fechaIngreso, personalNuevo.getFechaIngreso());
+		assertEquals(salario, personalNuevo.getSalario());
+		assertEquals(areaAsignada, personalNuevo.getAreaAsignada());
 	}
 }
