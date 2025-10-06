@@ -3,6 +3,9 @@ package ar.edu.unlam.dominio;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
+import java.time.LocalDateTime;
+
 import org.junit.Before;
 import org.junit.Test;
 import ar.edu.unlam.dominio.gestion.Veterinaria;
@@ -14,6 +17,7 @@ import ar.edu.unlam.dominio.subclass.Especialista;
 import ar.edu.unlam.dominio.superclass.Animal;
 import ar.edu.unlam.dominio.superclass.Empleado;
 import ar.edu.unlam.dominio.superclass.Persona;
+import test.ar.edu.unlam.dominio.Turno;
 
 public class ClaseDeTest {
 	
@@ -819,4 +823,134 @@ public class ClaseDeTest {
 		
 		assertFalse(seAgrego);
 	}
+	
+	
+	@Test
+	public void dadoQueExisteUnaVeterinariaPorHerenciaObtengoQuePuedoCrearUnTurnoDevolviendomeTrue() {
+		Turno turno = new Turno();
+		Boolean resultadoObtenido = gestionVeterinaria.registrarTurno(turno);
+		assertTrue(resultadoObtenido);
+	}
+	
+	
+	@Test
+	public void dadoQueExisteUnaVeterinariaPorHerenciaObtengoQuePuedoCrearUnTurnoConAtrinutosCuandoLoConsultoObtengoSusAtributos() {
+		//Paso a registrar el clinete
+		
+		
+		String nombre = "Leonardo";
+		String apellido = "Saavedra";
+		Long dni = 45369852L;
+		
+		Long nroCliente = 3L;
+		String direccion = "Calle falsa 1234";
+		String telefono = "123456789";
+		Double saldo = 25000.0;
+		
+		 Cliente cliente = new Cliente(nombre, apellido, dni, nroCliente, telefono, direccion, saldo);
+		
+		 Boolean seRegistroCliente = this.gestionVeterinaria.registrarNuevoCliente(cliente);
+		assertTrue(seRegistroCliente);
+		 
+		 
+		 
+		//Paso a registrar a la mascota 
+		Integer id = 10;
+		String nombreFelino = "Panqueque";
+		Double peso = 2.5;
+		Double altura = 0.35;
+		String fechaNacimiento = "2025-06-02";
+		Long dniDueño = 45369852L;
+		String especie = "Siames";
+		String colorPrincipal = "Gris";
+		String colorSecundario = "Blanco";
+		
+		Animal gato = new Felino(id, nombreFelino, peso, altura, fechaNacimiento, dniDueño, especie, colorPrincipal, colorSecundario);
+		Boolean seRegistroGato = this.gestionVeterinaria.registrarMascota(gato);
+		
+		assertTrue(seRegistroGato);
+		
+		
+		
+		
+		
+		//Paso a registrar al doctor 
+		String nombreDoctor = "Matias";
+		String apellidoDOctor = "Martinez";
+		Long dniDoctor = 31L;
+		Long nroLegajo = 1L;
+		String fechaIngreso = "2025-01-01";
+		Double salario = 10000.0;
+		Long nroMatricula = 204060100L;
+		String especialidad = "Cardiologia";
+		
+		Especialista especialista = new Especialista(nombreDoctor, apellidoDOctor, dniDoctor, nroLegajo, fechaIngreso, salario, nroMatricula, especialidad);
+		Boolean seRegistroEspecialista = gestionVeterinaria.registrarNuevoEmpleado(especialista);
+		assertTrue(seRegistroEspecialista);
+		
+		//Paso a crear la hora del turno 
+		LocalDateTime horaTurno = LocalDateTime.of(2025, 2, 5, 15, 0);
+		//Paso a crear la hora en la que se efectuo el turno
+		LocalDateTime horaCreacionTurno = LocalDateTime.now();
+		
+		//Paso a asignarle un id al turno manualmente, luego sera autoincrementado 
+		Integer idTurno = 0;
+		//Paso a registrar el turno 
+		
+		
+		Turno nuevoTurno = new Turno(cliente.getDni(),gato.getId(),especialista.getNroLegajo(),horaTurno,horaCreacionTurno,idTurno);
+		
+		Boolean turnoCreado = gestionVeterinaria.registrarTurno(nuevoTurno);
+		 
+		assertTrue(turnoCreado);
+		
+		
+		//Paso a consultar el turno
+		
+		Long dniClienteObtenido = nuevoTurno.getDni();
+		Long idMascotaObtenida = nuevoTurno.getNumeroLegajoDoctor();
+		LocalDateTime horaCreacionDeTurnoObtenida = nuevoTurno.getHoraCreacionTurno();
+		LocalDateTime horaTurnoObtenida = nuevoTurno.getHoraTurno();
+		
+		
+		
+		
+		
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
