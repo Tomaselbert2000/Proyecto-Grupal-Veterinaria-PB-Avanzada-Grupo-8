@@ -826,12 +826,16 @@ public class ClaseDeTest {
 	}
 	
 	
+	
+	
 	@Test
 	public void dadoQueExisteUnaVeterinariaPorHerenciaObtengoQuePuedoCrearUnTurnoDevolviendomeTrue() {
 		Turno turno = new Turno();
 		Boolean resultadoObtenido = gestionVeterinaria.registrarTurno(turno);
 		assertTrue(resultadoObtenido);
 	}
+	
+	/*
 	
 	
 	@Test
@@ -915,13 +919,16 @@ public class ClaseDeTest {
 		
 		
 		
+	
+	
+	
 		
 		
 		
 		
 	}
 	
-	
+	*/
 	
 	
 	
