@@ -10,10 +10,13 @@ public class Turno {
 	private Integer idMascota;
 	private Long nroLegajo;
 	private Servicio servicio;
-	private LocalDateTime horaCreacionTurno;
+	private LocalDateTime horaCreacionTurno, horaAAsistir;
 	private Integer idTurno;
 
-	public Turno(Long dni, Integer idMascota, Long nroLegajo, Servicio servicio, LocalDateTime horaCreacionTurno,
+	public Turno() {
+		
+	}
+	public Turno(Long dni, Integer idMascota, Long nroLegajo, Servicio servicio, LocalDateTime horaCreacionTurno,LocalDateTime horaAAsistir,
 			Integer idTurno) {
 		this.dni = dni;
 		this.idMascota = idMascota;
@@ -21,10 +24,16 @@ public class Turno {
 		this.servicio = servicio;
 		this.horaCreacionTurno = horaCreacionTurno;
 		this.idTurno = idTurno;
+		this.horaAAsistir= horaAAsistir;
 	}
 
-	public Turno() {
+	
+
+	public LocalDateTime getHoraAAsistir() {
+		return horaAAsistir;
 	}
+
+
 
 	public Long getDni() {
 		return dni;
@@ -48,5 +57,11 @@ public class Turno {
 
 	public Integer getIdTurno() {
 		return idTurno;
+	}
+
+	@Override
+	public String toString() {
+		return "Turno [dni=" + dni + ", idMascota=" + idMascota + ", nroLegajo=" + nroLegajo + ", servicio=" + servicio
+				+ ", horaCreacionTurno=" + horaCreacionTurno + ", idTurno=" + idTurno + "]";
 	}
 }

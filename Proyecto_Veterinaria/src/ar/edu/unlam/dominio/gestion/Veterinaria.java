@@ -7,6 +7,7 @@ import ar.edu.unlam.dominio.subclass.Cliente;
 import ar.edu.unlam.dominio.subclass.Especialista;
 import ar.edu.unlam.dominio.superclass.Animal;
 import ar.edu.unlam.dominio.superclass.Empleado;
+import ar.edu.unlam.dominio.superclass.Historial;
 import ar.edu.unlam.dominio.superclass.Persona;
 import ar.edu.unlam.dominio.superclass.Servicio;
 import ar.edu.unlam.dominio.turno.Turno;
@@ -17,12 +18,17 @@ public class Veterinaria {
 	private HashSet<Animal> listaMascotas;
 	private HashSet<Servicio> listaDeServicios;
 	private HashSet<Turno> listaTurnos;
+	private HashSet<Historial>listaDeHistorial;
 
 	public Veterinaria() {
 		this.listaPersonas = new HashSet<>();
 		this.listaMascotas = new HashSet<>();
 		this.listaDeServicios = new HashSet<>();
 		this.listaTurnos = new HashSet<Turno>();
+	}
+
+	public HashSet<Animal> getListaMascotas() {
+		return listaMascotas;
 	}
 
 	public Boolean registrarNuevaPersona(Persona nuevaPersona) {
@@ -89,6 +95,10 @@ public class Veterinaria {
 			}
 		}
 		return true;
+	}
+
+	public HashSet<Turno> getListaTurnos() {
+		return listaTurnos;
 	}
 
 	private Boolean fechaIngresoValida(Empleado nuevoEmpleado) {
@@ -168,6 +178,42 @@ public class Veterinaria {
 
 	public Boolean registrarTurno(Turno turno) {
 		return listaTurnos.add(turno);
+	}
+
+	public Boolean cancelarTurno(Integer idTurnoBuscado) {
+		if (!listaTurnos.isEmpty()) {
+			for (Turno turno : this.listaTurnos) {
+				if (turno.getIdTurno() != null && turno.getIdTurno().equals(idTurnoBuscado)) {
+					return this.listaTurnos.remove(turno);
+
+				}
+			}
+		}
+		return false;
+	}
+
+	public HashSet<Turno> ObtenerTurnosPorDniCliente(Long dni) {
+		HashSet<Turno> listaTurnosADevolver = new HashSet<Turno>();
+		if (!listaTurnos.isEmpty()) {
+			for (Turno turno : this.listaTurnos) {
+				if (turno.getDni() != null && turno.getDni().equals(dni)) {
+					listaTurnosADevolver.add(turno);
+				}
+			}
+		}
+		return listaTurnosADevolver;
+	}
+
+	public HashSet<Animal> ObtenerAnimalPorDniCliente(Long dni) {
+		HashSet<Animal> listaTurnosADevolver = new HashSet<Animal>();
+		if (!listaMascotas.isEmpty()) {
+			for (Animal animal : this.listaMascotas) {
+				if (animal.getDniDueño() != null && animal.getDniDueño().equals(dni)) {
+					listaTurnosADevolver.add(animal);
+				}
+			}
+		}
+		return listaTurnosADevolver;
 	}
 
 }
