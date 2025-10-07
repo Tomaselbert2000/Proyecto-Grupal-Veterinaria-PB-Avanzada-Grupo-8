@@ -55,4 +55,8 @@ public class Cliente extends Persona {
 		Cliente other = (Cliente) obj;
 		return Objects.equals(nroCliente, other.nroCliente);
 	}
+
+	public void descontarSaldoAbonado(Double costoAbonado) {
+		this.saldo -= costoAbonado;
+	}
 }

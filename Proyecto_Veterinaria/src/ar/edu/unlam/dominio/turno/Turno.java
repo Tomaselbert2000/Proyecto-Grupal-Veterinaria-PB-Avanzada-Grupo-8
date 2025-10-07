@@ -6,18 +6,18 @@ import ar.edu.unlam.dominio.superclass.Servicio;
 
 public class Turno {
 
-	private Long dni;
+	private Long nroCliente;
 	private Integer idMascota;
-	private Long nroLegajo;
+	private Long nroLegajoEspecialistaConsultado;
 	private Servicio servicio;
 	private LocalDateTime horaCreacionTurno;
 	private Integer idTurno;
 
-	public Turno(Long dni, Integer idMascota, Long nroLegajo, Servicio servicio, LocalDateTime horaCreacionTurno,
+	public Turno(Long nroCliente, Integer idMascota, Long nroLegajoEspecialistaConsultado, Servicio servicio, LocalDateTime horaCreacionTurno,
 			Integer idTurno) {
-		this.dni = dni;
+		this.nroCliente = nroCliente;
 		this.idMascota = idMascota;
-		this.nroLegajo = nroLegajo;
+		this.nroLegajoEspecialistaConsultado = nroLegajoEspecialistaConsultado;
 		this.servicio = servicio;
 		this.horaCreacionTurno = horaCreacionTurno;
 		this.idTurno = idTurno;
@@ -26,16 +26,16 @@ public class Turno {
 	public Turno() {
 	}
 
-	public Long getDni() {
-		return dni;
+	public Long getNroCliente() {
+		return nroCliente;
 	}
 
 	public Integer getIdMascota() {
 		return idMascota;
 	}
 
-	public Long getNroLegajo() {
-		return nroLegajo;
+	public Long getNroLegajoEspecialistaConsultado() {
+		return nroLegajoEspecialistaConsultado;
 	}
 
 	public Servicio getServicio() {
