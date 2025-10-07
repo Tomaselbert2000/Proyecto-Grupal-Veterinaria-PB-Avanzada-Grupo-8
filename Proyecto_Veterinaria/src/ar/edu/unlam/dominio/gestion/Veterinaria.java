@@ -40,7 +40,9 @@ public class Veterinaria {
 	}
 
 	public Boolean registrarNuevoCliente(Cliente nuevoCliente) {
-		return this.dniValido(nuevoCliente) && this.numeroClienteValido(nuevoCliente) && this.saldoValido(nuevoCliente)
+		return this.dniValido(nuevoCliente) 
+				&& this.numeroClienteValido(nuevoCliente) 
+				&& this.saldoValido(nuevoCliente)
 				&& this.listaPersonas.add(nuevoCliente);
 	}
 
@@ -131,8 +133,10 @@ public class Veterinaria {
 	}
 
 	public Boolean registrarMascota(Animal nuevaMascota) {
-		return this.tieneDueñoRegistrado(nuevaMascota) && this.fechaNacimientoValida(nuevaMascota)
-				&& this.idMascotaValido(nuevaMascota) && this.listaMascotas.add(nuevaMascota);
+		return this.tieneDueñoRegistrado(nuevaMascota) 
+				&& this.fechaNacimientoValida(nuevaMascota)
+				&& this.idMascotaValido(nuevaMascota) 
+				&& this.listaMascotas.add(nuevaMascota);
 	}
 
 	private Boolean fechaNacimientoValida(Animal nuevaMascota) {
@@ -177,7 +181,85 @@ public class Veterinaria {
 	}
 
 	public Boolean registrarTurno(Turno turno) {
-		return listaTurnos.add(turno);
+		Boolean precondiciones = 
+				this.clienteRegistrado(turno)
+				&& this.clienteConSaldoSuficiente(turno)
+				&& this.servicioRegistrado(turno)
+				&& this.mascotaRegistrada(turno)
+				&& this.especialistaConsultadoRegistrado(turno);
+		
+		if(precondiciones) {
+			this.actualizarSaldoCliente(turno);
+			return this.listaTurnos.add(turno);
+		}
+		
+		return false;
+	}
+
+	private void actualizarSaldoCliente(Turno turno) {
+		HashSet<Cliente> listaClientes = new HashSet<>();
+		for(Persona persona : this.listaPersonas) {
+			if(persona instanceof Cliente) {
+				listaClientes.add((Cliente) persona);
+			}
+		}
+		
+		for(Cliente cliente : listaClientes) {
+			if(cliente.getNroCliente().equals(turno.getNroCliente())) {
+				cliente.descontarSaldoAbonado(turno.getServicio().getCostoBase());
+			}
+		}
+	}
+
+	private Boolean clienteConSaldoSuficiente(Turno turno) {
+		for(Persona person : this.listaPersonas) {
+			if(person instanceof Cliente) {
+				if(((Cliente) person).getSaldo() >= turno.getServicio().getCostoBase()) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	private Boolean servicioRegistrado(Turno turno) {
+		for(Servicio service : this.listaDeServicios) {
+			if(service.equals(turno.getServicio())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private Boolean mascotaRegistrada(Turno turno) {
+		for(Animal mascota : this.listaMascotas) {
+			if(mascota.getId().equals(turno.getIdMascota())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private Boolean especialistaConsultadoRegistrado(Turno turno) {
+		for(Persona especialista : this.listaPersonas) {
+			if(especialista instanceof Especialista) {
+				if(((Especialista) especialista).getNroLegajo().equals(turno.getNroLegajoEspecialistaConsultado())) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	private Boolean clienteRegistrado(Turno turno) {
+		for(Persona cliente : this.listaPersonas) {
+			if(cliente instanceof Cliente) {
+				if(((Cliente) cliente).getNroCliente().equals(turno.getNroCliente())) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	public Boolean cancelarTurno(Integer idTurnoBuscado) {
@@ -191,18 +273,20 @@ public class Veterinaria {
 		}
 		return false;
 	}
-
+	
+	
 	public HashSet<Turno> ObtenerTurnosPorDniCliente(Long dni) {
 		HashSet<Turno> listaTurnosADevolver = new HashSet<Turno>();
 		if (!listaTurnos.isEmpty()) {
 			for (Turno turno : this.listaTurnos) {
-				if (turno.getDni() != null && turno.getDni().equals(dni)) {
+				if (turno.getNroCliente() != null && turno.getNroCliente().equals(dni)) {
 					listaTurnosADevolver.add(turno);
 				}
 			}
 		}
 		return listaTurnosADevolver;
-	}
+}
+
 
 	public HashSet<Animal> ObtenerAnimalPorDniCliente(Long dni) {
 		HashSet<Animal> listaTurnosADevolver = new HashSet<Animal>();

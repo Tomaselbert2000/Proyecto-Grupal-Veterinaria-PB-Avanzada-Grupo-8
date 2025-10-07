@@ -11,13 +11,13 @@ public class Animal {
 	private String fechaNacimiento;
 	private Long dniDueño;
 
-	public Animal(Integer idMascota, String nombre, Double peso, Double altura, String fechaNacimiento, Long idDueño) {
+	public Animal(Integer idMascota, String nombre, Double peso, Double altura, String fechaNacimiento, Long dniDueño) {
 		this.idMascota = idMascota;
 		this.nombre = nombre;
 		this.peso = peso;
 		this.altura = altura;
 		this.fechaNacimiento = fechaNacimiento;
-		this.dniDueño = idDueño;
+		this.dniDueño = dniDueño;
 	}
 
 	public String getNombre() {

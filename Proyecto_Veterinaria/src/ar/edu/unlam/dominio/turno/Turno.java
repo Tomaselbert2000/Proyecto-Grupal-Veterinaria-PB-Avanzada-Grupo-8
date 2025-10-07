@@ -6,25 +6,27 @@ import ar.edu.unlam.dominio.superclass.Servicio;
 
 public class Turno {
 
-	private Long dni;
+	private Long nroCliente;
 	private Integer idMascota;
-	private Long nroLegajo;
+	private Long nroLegajoEspecialistaConsultado;
 	private Servicio servicio;
 	private LocalDateTime horaCreacionTurno, horaAAsistir;
 	private Integer idTurno;
+	
 
 	public Turno() {
 		
 	}
-	public Turno(Long dni, Integer idMascota, Long nroLegajo, Servicio servicio, LocalDateTime horaCreacionTurno,LocalDateTime horaAAsistir,
-			Integer idTurno) {
-		this.dni = dni;
+	public Turno(Long nroCliente, Integer idMascota, Long nroLegajoEspecialistaConsultado, Servicio servicio, LocalDateTime horaCreacionTurno,LocalDateTime horaAAsistir,Integer idTurno) {
+
+		
+		this.nroCliente = nroCliente;
 		this.idMascota = idMascota;
-		this.nroLegajo = nroLegajo;
+		this.nroLegajoEspecialistaConsultado = nroLegajoEspecialistaConsultado;
 		this.servicio = servicio;
 		this.horaCreacionTurno = horaCreacionTurno;
-		this.idTurno = idTurno;
 		this.horaAAsistir= horaAAsistir;
+		this.idTurno = idTurno;
 	}
 
 	
@@ -35,16 +37,20 @@ public class Turno {
 
 
 
-	public Long getDni() {
-		return dni;
+
+	
+
+	public Long getNroCliente() {
+		return nroCliente;
+
 	}
 
 	public Integer getIdMascota() {
 		return idMascota;
 	}
 
-	public Long getNroLegajo() {
-		return nroLegajo;
+	public Long getNroLegajoEspecialistaConsultado() {
+		return nroLegajoEspecialistaConsultado;
 	}
 
 	public Servicio getServicio() {
@@ -58,10 +64,7 @@ public class Turno {
 	public Integer getIdTurno() {
 		return idTurno;
 	}
+	
 
-	@Override
-	public String toString() {
-		return "Turno [dni=" + dni + ", idMascota=" + idMascota + ", nroLegajo=" + nroLegajo + ", servicio=" + servicio
-				+ ", horaCreacionTurno=" + horaCreacionTurno + ", idTurno=" + idTurno + "]";
-	}
+	
 }
