@@ -8,37 +8,30 @@ public class Turno {
 
 	private Long nroCliente;
 	private Integer idMascota;
-	private Long nroLegajoEspecialistaConsultado;
+	private Long nroMatriculaEspecialistaConsultado;
 	private Servicio servicio;
 	private LocalDateTime horaCreacionTurno, horaAAsistir;
 	private Integer idTurno;
-	
 
 	public Turno() {
-		
-	}
-	public Turno(Long nroCliente, Integer idMascota, Long nroLegajoEspecialistaConsultado, Servicio servicio, LocalDateTime horaCreacionTurno,LocalDateTime horaAAsistir,Integer idTurno) {
 
-		
+	}
+
+	public Turno(Long nroCliente, Integer idMascota, Long nroMatriculaEspecialistaConsultado, Servicio servicio,
+			LocalDateTime horaCreacionTurno, LocalDateTime horaAAsistir, Integer idTurno) {
+
 		this.nroCliente = nroCliente;
 		this.idMascota = idMascota;
-		this.nroLegajoEspecialistaConsultado = nroLegajoEspecialistaConsultado;
+		this.nroMatriculaEspecialistaConsultado = nroMatriculaEspecialistaConsultado;
 		this.servicio = servicio;
 		this.horaCreacionTurno = horaCreacionTurno;
-		this.horaAAsistir= horaAAsistir;
+		this.horaAAsistir = horaAAsistir;
 		this.idTurno = idTurno;
 	}
-
-	
 
 	public LocalDateTime getHoraAAsistir() {
 		return horaAAsistir;
 	}
-
-
-
-
-	
 
 	public Long getNroCliente() {
 		return nroCliente;
@@ -49,8 +42,8 @@ public class Turno {
 		return idMascota;
 	}
 
-	public Long getNroLegajoEspecialistaConsultado() {
-		return nroLegajoEspecialistaConsultado;
+	public Long getNroMatriculaEspecialistaConsultado() {
+		return nroMatriculaEspecialistaConsultado;
 	}
 
 	public Servicio getServicio() {
@@ -64,7 +57,5 @@ public class Turno {
 	public Integer getIdTurno() {
 		return idTurno;
 	}
-	
 
-	
 }
