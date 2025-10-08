@@ -2,7 +2,7 @@ package ar.edu.unlam.dominio.superclass;
 
 import java.util.Objects;
 
-public class Servicio {
+public class Servicio{
 
 	/*
 	 * Para gestionar correctamente los distintos tipos de servicios de la
@@ -28,7 +28,7 @@ public class Servicio {
 		return this.descripcion;
 	}
 
-	public Double getCostoBase() {
+	public Double getCosto() {
 		return this.costoBase;
 	}
 
@@ -47,5 +47,9 @@ public class Servicio {
 			return false;
 		Servicio other = (Servicio) obj;
 		return Objects.equals(idServicio, other.idServicio);
+	}
+
+	public Double obtenerCostoTotal() {
+		return this.getCosto();
 	}
 }

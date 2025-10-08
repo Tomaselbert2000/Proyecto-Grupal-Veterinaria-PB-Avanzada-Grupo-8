@@ -18,7 +18,6 @@ public class Veterinaria {
 	private HashSet<Animal> listaMascotas;
 	private HashSet<Servicio> listaDeServicios;
 	private HashSet<Turno> listaTurnos;
-	private HashSet<Historial> listaDeHistorial;
 
 	public Veterinaria() {
 		this.listaPersonas = new HashSet<>();
@@ -169,14 +168,14 @@ public class Veterinaria {
 	}
 
 	private Boolean costoBaseValido(Servicio servicio) {
-		return servicio.getCostoBase() > 0.0;
+		return servicio.getCosto() > 0.0;
 	}
 
 	private Boolean idServicioValido(Servicio servicio) {
 		return servicio.getId() > 0;
 	}
 
-	public Boolean registrarTurno(Turno turno) {
+	public Boolean registrarTurno(Turno turno, Double totalAbonadoPorServicio) {
 		Boolean precondiciones = 
 				this.clienteRegistrado(turno) 
 				&& this.clienteConSaldoSuficiente(turno)
@@ -185,14 +184,14 @@ public class Veterinaria {
 				&& this.especialistaConsultadoRegistrado(turno);
 
 		if (precondiciones) {
-			this.actualizarSaldoCliente(turno);
+			this.actualizarSaldoCliente(turno, totalAbonadoPorServicio);
 			return this.listaTurnos.add(turno);
 		}
 
 		return false;
 	}
 
-	private void actualizarSaldoCliente(Turno turno) {
+	private void actualizarSaldoCliente(Turno turno, Double total) {
 		HashSet<Cliente> listaClientes = new HashSet<>();
 		for (Persona persona : this.listaPersonas) {
 			if (persona instanceof Cliente) {
@@ -202,7 +201,7 @@ public class Veterinaria {
 
 		for (Cliente cliente : listaClientes) {
 			if (cliente.getNroCliente().equals(turno.getNroCliente())) {
-				cliente.descontarSaldoAbonado(turno.getServicio().getCostoBase());
+				cliente.descontarSaldoAbonado(total);
 			}
 		}
 	}
@@ -210,7 +209,7 @@ public class Veterinaria {
 	private Boolean clienteConSaldoSuficiente(Turno turno) {
 		for (Persona person : this.listaPersonas) {
 			if (person instanceof Cliente) {
-				if (((Cliente) person).getSaldo() >= turno.getServicio().getCostoBase()) {
+				if (((Cliente) person).getSaldo() >= turno.getServicio().getCosto()) {
 					return true;
 				}
 			}
@@ -292,15 +291,4 @@ public class Veterinaria {
 		return listaTurnosADevolver;
 	}
 
-	public Cliente buscarClientePorId(Long nroCliente) {
-		for (Persona cliente : this.listaPersonas) {
-			if (cliente instanceof Cliente) {
-				if (((Cliente) cliente).getNroCliente().equals(nroCliente)) {
-				
-				 return (Cliente)cliente;
-				}
-			}
-		}
-		return null;
-	}
 }

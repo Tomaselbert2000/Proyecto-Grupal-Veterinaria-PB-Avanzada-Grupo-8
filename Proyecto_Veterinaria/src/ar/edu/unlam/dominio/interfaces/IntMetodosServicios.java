@@ -4,5 +4,5 @@ public interface IntMetodosServicios {
 
 	public Double calcularRecargo();
 
-	public Double calcularPrecioFinal();
+	public Double obtenerCostoTotal();
 }
