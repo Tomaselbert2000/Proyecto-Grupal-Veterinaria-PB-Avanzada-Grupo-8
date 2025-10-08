@@ -290,5 +290,17 @@ public class Veterinaria {
 		}
 		return listaTurnosADevolver;
 	}
+	
+	public Cliente buscarClientePorId(Long nroCliente) {
+		for (Persona cliente : this.listaPersonas) {
+			if (cliente instanceof Cliente) {
+				if (((Cliente) cliente).getNroCliente().equals(nroCliente)) {
+				
+				 return (Cliente)cliente;
+				}
+			}
+		}
+		return null;
+	}
 
 }
