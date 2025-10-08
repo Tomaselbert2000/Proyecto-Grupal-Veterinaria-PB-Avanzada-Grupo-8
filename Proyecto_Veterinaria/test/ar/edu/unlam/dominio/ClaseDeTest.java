@@ -122,6 +122,26 @@ public class ClaseDeTest {
 		Boolean seRegistroElCliente = this.gestionVeterinaria.registrarNuevoCliente(clienteDePrueba);
 		assertTrue(seRegistroElCliente);
 	}
+	
+	@Test
+	public void dadoQueExisteUnaVeterinariaSiRegistroUnClientePuedoEncontrarloPorNroCliente() {
+		String nombre = "Tomas";
+		String apellido = "Elbert";
+		Long dni = 1L;
+		Long nroCliente = 2L;
+		String direccion = "Calle falsa 123";
+		String telefono = "123456";
+		Double saldo = 25000.0;
+
+		Cliente clienteDePrueba = new Cliente(nombre, apellido, dni, nroCliente, telefono, direccion, saldo);
+
+		Boolean seRegistroElCliente = this.gestionVeterinaria.registrarNuevoCliente(clienteDePrueba);
+		assertTrue(seRegistroElCliente);
+		Cliente cliente2 = this.gestionVeterinaria.buscarClientePorId(clienteDePrueba.getNroCliente());
+		
+		assertEquals(clienteDePrueba, cliente2);
+		
+	}
 
 	@Test
 	public void dadoQueExisteUnaVeterinariaSiRegistroUnEmpleadoPorHerenciaObtengoTrue() {
@@ -1028,7 +1048,7 @@ public class ClaseDeTest {
 		Integer idServicio = 2;
 		String descripcion = "Cirujia cardiobascular";
 		Double costoBase = 200000.0;
-		TipoCirugia tipoCirugia = TipoCirugia.CIRUGIA_CARDIOVASCULAR;
+		TipoCirugia tipoCirugia = TipoCirugia.CIRUGIA_CARCIOBASCULAR;
 		
 		Servicio servicio = new Cirugia(idServicio, descripcion, costoBase, tipoCirugia);
 		this.gestionVeterinaria.registrarNuevoServicio(servicio);
@@ -1219,7 +1239,7 @@ public class ClaseDeTest {
 		String descripcion = "Cirujia cardiobascular";
 		// Paso a agregarle un costo a la consulta
 		Double costoBase = 200000.0D;
-		TipoCirugia tipoCirugia = TipoCirugia.CIRUGIA_CARDIOVASCULAR;
+		TipoCirugia tipoCirugia = TipoCirugia.CIRUGIA_CARCIOBASCULAR;
 		Servicio servicio = new Cirugia(idServicio, descripcion, costoBase, tipoCirugia);
 
 		Turno nuevoTurno = new Turno(cliente.getDni(), gato.getId(), especialista.getNroLegajo(), servicio,
