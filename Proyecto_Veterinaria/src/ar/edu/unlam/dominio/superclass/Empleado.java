@@ -1,19 +1,17 @@
-package ar.edu.unlam.dominio;
+package ar.edu.unlam.dominio.superclass;
 
 import java.util.Objects;
 
-public class Empleado extends Persona{
+public class Empleado extends Persona {
 
 	private Long nroLegajo;
 	private String fechaIngreso;
-	private String puesto;
 	private Double salario;
 
-	public Empleado(String nombre, String apellido, Long dni, Long nroLegajo, String fechaIngreso, String puesto, Double salario) {
+	public Empleado(String nombre, String apellido, Long dni, Long nroLegajo, String fechaIngreso, Double salario) {
 		super(nombre, apellido, dni);
 		this.nroLegajo = nroLegajo;
 		this.fechaIngreso = fechaIngreso;
-		this.puesto = puesto;
 		this.salario = salario;
 	}
 
@@ -23,10 +21,6 @@ public class Empleado extends Persona{
 
 	public String getFechaIngreso() {
 		return this.fechaIngreso;
-	}
-
-	public String getPuesto() {
-		return this.puesto;
 	}
 
 	public Double getSalario() {

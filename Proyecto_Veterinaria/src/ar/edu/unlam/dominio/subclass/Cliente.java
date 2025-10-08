@@ -1,15 +1,18 @@
-package ar.edu.unlam.dominio;
+package ar.edu.unlam.dominio.subclass;
 
 import java.util.Objects;
 
-public class Cliente extends Persona{
+import ar.edu.unlam.dominio.superclass.Persona;
+
+public class Cliente extends Persona {
 
 	private Long nroCliente;
 	private String telefono;
 	private String direccion;
 	private Double saldo;
 
-	public Cliente(String nombre, String apellido, Long dni, Long nroCliente, String telefono, String direccion, Double saldo) {
+	public Cliente(String nombre, String apellido, Long dni, Long nroCliente, String telefono, String direccion,
+			Double saldo) {
 		super(nombre, apellido, dni);
 		this.nroCliente = nroCliente;
 		this.telefono = telefono;
@@ -51,5 +54,9 @@ public class Cliente extends Persona{
 			return false;
 		Cliente other = (Cliente) obj;
 		return Objects.equals(nroCliente, other.nroCliente);
+	}
+
+	public void descontarSaldoAbonado(Double costoAbonado) {
+		this.saldo -= costoAbonado;
 	}
 }
