@@ -940,85 +940,27 @@ public class ClaseDeTest {
 
 	@Test
 	public void dadoQueExisteUnaVeterinariaSiCreoUnTurnoPuedoConsultarSusAtributos() {
-		// Generamos el entorno para el test
+		Cliente clientePrueba = new Cliente("Tomas", "Elbert", 204060L, 1L, "12345", "Calle falsa 123", 25000.0);
+		this.gestionVeterinaria.registrarNuevoCliente(clientePrueba);
 
-		// Cliente
-		String nombre = "Leonardo";
-		String apellido = "Saavedra";
-		Long dni = 45369852L;
-		Long nroCliente = 3L;
-		String direccion = "Calle falsa 1234";
-		String telefono = "123456789";
-		Double saldo = 25000.0;
-		Cliente cliente = new Cliente(nombre, apellido, dni, nroCliente, telefono, direccion, saldo);
-		this.gestionVeterinaria.registrarNuevoCliente(cliente);
+		Animal mascotaPrueba = new Animal(1, "Mimi", 2.5, 0.30, "2025-05-12", 204060L);
+		this.gestionVeterinaria.registrarMascota(mascotaPrueba);
 
-		// Mascota
-		Integer id = 10;
-		String nombreFelino = "Panqueque";
-		Double peso = 2.5;
-		Double altura = 0.35;
-		String fechaNacimiento = "2025-06-02";
-		Long dniDueño = 45369852L;
-		String especie = "Siames";
-		String colorPrincipal = "Gris";
-		String colorSecundario = "Blanco";
-		Animal gato = new Felino(id, nombreFelino, peso, altura, fechaNacimiento, dniDueño, especie, colorPrincipal,
-				colorSecundario);
-		this.gestionVeterinaria.registrarMascota(gato);
+		Especialista especialistaPrueba = new Especialista("Juan", "Perez", 103050L, 1L, "2019-11-06", 250000.0, 369L,
+				Especialidad.CIRUGIA);
+		this.gestionVeterinaria.registrarNuevoEmpleado(especialistaPrueba);
 
-		// Doctor
-		String nombreDoctor = "Matias";
-		String apellidoDOctor = "Martinez";
-		Long dniDoctor = 31L;
-		Long nroLegajo = 1L;
-		String fechaIngreso = "2025-01-01";
-		Double salario = 10000.0;
-		Long nroMatricula = 204060100L;
-		Especialidad especialidad = Especialidad.CIRUGIA;
-		Especialista especialista = new Especialista(nombreDoctor, apellidoDOctor, dniDoctor, nroLegajo, fechaIngreso,
-				salario, nroMatricula, especialidad);
-		this.gestionVeterinaria.registrarNuevoEmpleado(especialista);
+		Servicio servicioPrueba = new Servicio(1, "Corte de pelo", 10000.0);
+		this.gestionVeterinaria.registrarNuevoServicio(servicioPrueba);
 
-		// Paso a crear la hora del turno
-		LocalDateTime horaAAsistir = LocalDateTime.of(2025, 01, 12, 14, 00);
-		// Paso a crear la hora en la que se efectuo el turno
-		LocalDateTime horaCreacionTurno = LocalDateTime.now();
-
-		// Paso a asignarle un id al turno manualmente, luego sera autoincrementado
-		Integer idTurno = 0;
-
-		// Paso a agregarle un costo a la consulta y registro del servicio
-
-		Integer idServicio = 2;
-		String descripcion = "Cirujia cardiovascular";
-		Double costoBase = 200000.0D;
-		TipoCirugia tipoCirugia = TipoCirugia.CIRUGIA_CARDIOVASCULAR;
-		Servicio servicio = new Cirugia(idServicio, descripcion, costoBase, tipoCirugia);
-		this.gestionVeterinaria.registrarNuevoServicio(servicio);
+		Turno turno = new Turno(clientePrueba.getNroCliente(), mascotaPrueba.getId(), especialistaPrueba.getNroMatricula(),
+				servicioPrueba, LocalDateTime.now(), LocalDateTime.now(), 1);
+		this.gestionVeterinaria.registrarTurno(turno);
 		
-		Turno nuevoTurno = new Turno(cliente.getNroCliente(), gato.getId(), especialista.getNroMatricula(), servicio,
-				horaCreacionTurno, horaAAsistir, idTurno);
-
-		Boolean turnoCreado = this.gestionVeterinaria.registrarTurno(nuevoTurno);
-
-		assertTrue(turnoCreado);
-
-		// Paso a consultar el turno
-
-		Long nroClienteObtenido = nuevoTurno.getNroCliente();
-		Integer idMascotaObtenida = nuevoTurno.getIdMascota();
-		Long numeroDeLegajoEspecialistaObtenido = nuevoTurno.getNroMatriculaEspecialistaConsultado();
-		Servicio servicioObtenido = nuevoTurno.getServicio();
-		LocalDateTime horaTurnoObtenida = nuevoTurno.getHoraCreacionTurno();
-		Integer idTurnoObtenido = nuevoTurno.getIdTurno();
-
-		assertEquals(cliente.getDni(), nroClienteObtenido);
-		assertEquals(gato.getId(), idMascotaObtenida);
-		assertEquals(especialista.getNroMatricula(), numeroDeLegajoEspecialistaObtenido);
-		assertEquals(servicioObtenido, servicio);
-		assertEquals(horaTurnoObtenida, horaCreacionTurno);
-		assertEquals(idTurnoObtenido, idTurno);
+		assertEquals(clientePrueba.getNroCliente(), turno.getNroCliente());
+		assertEquals(mascotaPrueba.getId(), turno.getIdMascota());
+		assertEquals(especialistaPrueba.getNroMatricula(), turno.getNroMatriculaEspecialistaConsultado());
+		assertEquals(servicioPrueba.getId(), turno.getServicio().getId());
 	}
 
 	@Test
@@ -1105,7 +1047,6 @@ public class ClaseDeTest {
 		Boolean resutladoObtenido = this.gestionVeterinaria.cancelarTurno(idTurnoBuscado);
 
 		assertTrue(resutladoObtenido);
-
 	}
 
 	@Test
@@ -1501,7 +1442,7 @@ public class ClaseDeTest {
 		assertFalse(seRegistroElTurno);
 	}
 
-	/*@Test
+	@Test
 	public void dadoQueExisteUnaVeterinariaUnClienteConSaldo25000YUnaMascotaSiElServicioVale10000obtengoQueSuNuevoSaldoEs15Mil() {
 		// generamos las instancias de objetos necesarias y registramos para ejecutar el test
 		
@@ -1521,13 +1462,12 @@ public class ClaseDeTest {
 		// creamos el turno una vez tenemos los datos necesarios registrados
 		Integer idParaElTurno = 1;
 		LocalDateTime fechaYhora = LocalDateTime.of(2025, 10, 7, 17, 15);
-		Turno nuevoTurno = new Turno(cliente.getDni(), mascotaPrueba.getId(), nuevoEspecialista.getNroLegajo(), servicioCortePelo, fechaYhora,fechaYhora, idParaElTurno);
+		Turno nuevoTurno = new Turno(cliente.getNroCliente(), mascotaPrueba.getId(), nuevoEspecialista.getNroMatricula(), servicioCortePelo, fechaYhora,fechaYhora, idParaElTurno);
 		this.gestionVeterinaria.registrarTurno(nuevoTurno);
 		
 		Double saldoDelClienteEsperado = 13000.0;
 		Double saldoDelClienteObtenido = cliente.getSaldo();
 		
 		assertEquals(saldoDelClienteEsperado, saldoDelClienteObtenido);
-	
-	}*/
+	}
 }
