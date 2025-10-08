@@ -1027,7 +1027,7 @@ public class ClaseDeTest {
 		Integer idServicio = 2;
 		String descripcion = "Cirujia cardiobascular";
 		Double costoBase = 200000.0;
-		TipoCirugia tipoCirugia = TipoCirugia.CIRUGIA_CARDIOVASCULAR;
+		TipoCirugia tipoCirugia = TipoCirugia.CIRUGIA_CARCIOBASCULAR;
 		
 		Servicio servicio = new Cirugia(idServicio, descripcion, costoBase, tipoCirugia);
 		this.gestionVeterinaria.registrarNuevoServicio(servicio);
